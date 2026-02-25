@@ -46,7 +46,7 @@ export function EnrollmentPage() {
 
   const scrollTo = useCallback((
     ref: React.RefObject<HTMLDivElement | null>,
-    mode: 'top' | 'peek-next' = 'top',
+    mode: 'top' | 'peek-next' | 'center' = 'top',
     delay = 200,
   ) => {
     if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
@@ -63,6 +63,11 @@ export function EnrollmentPage() {
         if (target > window.scrollY) {
           window.scrollTo({ top: target, behavior: 'smooth' });
         }
+      } else if (mode === 'center') {
+        const elCenter = window.scrollY + rect.top + rect.height / 2;
+        const viewCenter = (window.innerHeight + headerHeight) / 2;
+        const offset = elCenter - viewCenter;
+        window.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
       } else {
         const offset = window.scrollY + rect.top - headerHeight - SCROLL_GAP;
         window.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
@@ -140,7 +145,7 @@ export function EnrollmentPage() {
     }
     if (autoScrollTimerRef.current) clearTimeout(autoScrollTimerRef.current);
     const isMobile = window.innerWidth < SM_BREAKPOINT;
-    scrollTo(formatRef, isMobile ? 'top' : 'peek-next', 250);
+    scrollTo(formatRef, isMobile ? 'center' : 'peek-next', 250);
     if (isMobile) {
       autoScrollTimerRef.current = setTimeout(() => {
         scrollTo(packageRef, 'top', 0);
