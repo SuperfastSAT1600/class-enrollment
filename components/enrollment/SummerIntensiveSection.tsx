@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/Button';
 import { SUMMER_INTENSIVE_DATA } from '@/lib/data/pricing';
 import { ICON_MAP } from './icons';
 
-const CONSULTATION_LINK = '#consultation';
 
 export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
   function SummerIntensiveSection(_props, ref) {
@@ -215,15 +214,14 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
 
         {/* CTA */}
         <div className="text-center">
-          <a href={CONSULTATION_LINK}>
-            <Button
-              size="lg"
-              className="w-full sm:w-auto min-w-[280px]"
-              icon={<MessageCircle className="w-5 h-5" />}
-            >
-              원장님과 직접 상담하기
-            </Button>
-          </a>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-w-[280px]"
+            icon={<MessageCircle className="w-5 h-5" />}
+            disabled
+          >
+            원장님과 직접 상담하고 로드맵 설계하세요
+          </Button>
           <p className="mt-3 text-xs text-white/40">
             프로그램 상세 안내와 맞춤 상담을 받으실 수 있습니다
           </p>
