@@ -13,7 +13,6 @@ import {
 import { ProgramTypeSection } from './enrollment/ProgramTypeSection';
 import { ManagementTypeSection } from './enrollment/ManagementTypeSection';
 import { ClassFormatSection } from './enrollment/ClassFormatSection';
-import { ServicesSection } from './enrollment/ServicesSection';
 import { PackageSelectionSection } from './enrollment/PackageSelectionSection';
 import { SummarySection } from './enrollment/SummarySection';
 import { SummerIntensiveSection } from './enrollment/SummerIntensiveSection';
@@ -174,7 +173,6 @@ export function EnrollmentPage() {
 
   const showRegularFlow = programType === 'regular';
   const showFormatSection = showRegularFlow && managementType === 'managed';
-  const showUnmanagedServices = showRegularFlow && managementType === 'unmanaged' && resolvedCategoryId !== null;
   const showPackageSection = showRegularFlow && resolvedCategoryId !== null;
   const showSummarySection = showRegularFlow && resolvedCategoryId !== null && hasValidOption && selectedOption !== null;
 
@@ -224,13 +222,6 @@ export function EnrollmentPage() {
           />
         )}
 
-        {showUnmanagedServices && resolvedCategoryId && (
-          <ServicesSection
-            resolvedCategoryId={resolvedCategoryId}
-            categoryData={categoryData}
-            sectionNumber={3}
-          />
-        )}
 
         {showPackageSection && resolvedCategoryId && (
           <PackageSelectionSection
