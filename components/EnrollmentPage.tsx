@@ -135,7 +135,7 @@ export function EnrollmentPage() {
       setSelectedOption(null);
     }
     const isMobile = window.innerWidth < SM_BREAKPOINT;
-    scrollTo(isMobile ? packageRef : formatRef, isMobile ? 'top' : 'peek-next', 250);
+    scrollTo(formatRef, isMobile ? 'top' : 'peek-next', 250);
   }, [classFormat, scrollTo]);
 
   const handleOptionSelect = useCallback((option: OptionSelection) => {
