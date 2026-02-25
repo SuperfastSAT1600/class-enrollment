@@ -165,7 +165,7 @@ export function EnrollmentPage() {
         {/* Hero */}
         <section className="pt-12 sm:pt-20 pb-8 sm:pb-12 text-center px-4">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
-            나에게 맞는 수업을 선택하세요
+            아이에게 맞는 수업을 선택하세요
           </h1>
           <p className="text-sm sm:text-base text-white/60 max-w-xl mx-auto mb-6">
             단계별로 선택하면 나에게 딱 맞는 수업권을 찾을 수 있습니다.
