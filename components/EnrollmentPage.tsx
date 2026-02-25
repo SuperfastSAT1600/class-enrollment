@@ -144,7 +144,7 @@ export function EnrollmentPage() {
     if (isMobile) {
       autoScrollTimerRef.current = setTimeout(() => {
         scrollTo(packageRef, 'top', 0);
-      }, 5000);
+      }, 3000);
     }
   }, [classFormat, scrollTo]);
 
