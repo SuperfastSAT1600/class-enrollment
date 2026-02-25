@@ -12,7 +12,7 @@ const config: Config = {
         display: ['var(--font-outfit)', 'system-ui', 'sans-serif'],
       },
       colors: {
-        base: '#050816',
+        page: '#050816',
         surface: {
           DEFAULT: '#0d1225',
           elevated: '#1e283c',

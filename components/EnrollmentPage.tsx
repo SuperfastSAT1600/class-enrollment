@@ -157,7 +157,7 @@ export function EnrollmentPage() {
   const showSummarySection = showRegularFlow && resolvedCategoryId !== null && hasValidOption && selectedOption !== null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-base">
+    <div className="min-h-screen flex flex-col bg-page">
       <Header />
 
       <main className="flex-1">
