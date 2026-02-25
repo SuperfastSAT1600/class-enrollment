@@ -9,8 +9,20 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://class-enrollment.vercel.app'),
   title: 'SuperfastSAT - 수업 선택 및 상담 신청',
-  description: 'SuperfastSAT 수업 옵션을 선택하고 상담을 신청하세요.',
+  description: '관리형 SAT의 기준, SuperfastSAT 수업권. 정규수업과 여름방학 특강을 확인하세요.',
+  openGraph: {
+    title: 'SuperfastSAT - 수업 선택 및 상담 신청',
+    description: '관리형 SAT의 기준, SuperfastSAT 수업권. 정규수업과 여름방학 특강을 확인하세요.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SuperfastSAT - 수업 선택 및 상담 신청',
+    description: '관리형 SAT의 기준, SuperfastSAT 수업권. 정규수업과 여름방학 특강을 확인하세요.',
+    images: ['/og-image.png'],
+  },
 };
 
 export default function RootLayout({
