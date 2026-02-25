@@ -1,7 +1,6 @@
 import React from 'react';
 import { Calendar, Clock, Sparkles, Globe, MessageCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
 import { SUMMER_INTENSIVE_DATA } from '@/lib/data/pricing';
 import { ICON_MAP } from './icons';
 
@@ -214,14 +213,10 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
 
         {/* CTA */}
         <div className="text-center">
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-w-[280px]"
-            icon={<MessageCircle className="w-5 h-5" />}
-            disabled
-          >
+          <div className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-accent text-white shadow-clay-button w-full sm:w-auto min-w-[280px]">
+            <MessageCircle className="w-5 h-5" />
             원장님과 직접 상담하고 로드맵 설계하세요
-          </Button>
+          </div>
           <p className="mt-3 text-xs text-white/40">
             프로그램 상세 안내와 맞춤 상담을 받으실 수 있습니다
           </p>
