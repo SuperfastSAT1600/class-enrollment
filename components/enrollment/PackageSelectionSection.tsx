@@ -67,23 +67,16 @@ export const PackageSelectionSection = React.forwardRef<HTMLDivElement, PackageS
                         <Badge variant={labelInfo.variant}>{labelInfo.text}</Badge>
                       )}
                     </div>
-                    <div className="flex items-center justify-center gap-2">
-                      <span className="text-2xl font-bold text-white">
-                        {pkg.hours}시간
-                      </span>
-                      {pkg.discountRate && (
-                        <span className="text-sm font-bold text-rose-400">
-                          -{pkg.discountRate}%
-                        </span>
-                      )}
-                    </div>
+                    <p className="text-2xl font-bold text-white">
+                      {pkg.hours}시간
+                    </p>
                     <div>
                       <p className="text-lg font-bold text-accent-glow">
                         {formatWon(pkg.totalPrice)}
                       </p>
-                      {savings > 0 && (
+                      {savings > 0 && pkg.discountRate && (
                         <p className="text-xs sm:text-sm font-bold text-rose-400 mt-1">
-                          {formatWon(savings)} 절약
+                          {formatWon(savings)} 절약 -{pkg.discountRate}%
                         </p>
                       )}
                     </div>
