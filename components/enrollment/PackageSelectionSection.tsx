@@ -75,7 +75,7 @@ export const PackageSelectionSection = React.forwardRef<HTMLDivElement, PackageS
                         {formatWon(pkg.totalPrice)}
                       </p>
                       {savings > 0 && pkg.discountRate && (
-                        <p className="text-xs sm:text-sm font-bold text-rose-400 mt-1">
+                        <p className="text-sm sm:text-base font-bold text-rose-400 mt-1">
                           {formatWon(savings)} 절약 -{pkg.discountRate}%
                         </p>
                       )}

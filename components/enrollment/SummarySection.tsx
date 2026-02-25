@@ -68,7 +68,7 @@ export const SummarySection = React.forwardRef<HTMLDivElement, SummarySectionPro
               )}
             </p>
             {savingsInfo && (
-              <p className="text-xs sm:text-sm font-bold text-rose-400 mt-2">
+              <p className="text-sm sm:text-base font-bold text-rose-400 mt-2">
                 정가 대비 {formatWon(savingsInfo.savings)} 절약 (-{savingsInfo.discountRate}%)
               </p>
             )}
