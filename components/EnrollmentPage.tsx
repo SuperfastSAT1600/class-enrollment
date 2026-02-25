@@ -35,9 +35,13 @@ export function EnrollmentPage() {
   const packageRef = useRef<HTMLDivElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null);
   const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoScrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    return () => { if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current); };
+    return () => {
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+      if (autoScrollTimerRef.current) clearTimeout(autoScrollTimerRef.current);
+    };
   }, []);
 
   const scrollTo = useCallback((
@@ -134,8 +138,14 @@ export function EnrollmentPage() {
     if (changed) {
       setSelectedOption(null);
     }
+    if (autoScrollTimerRef.current) clearTimeout(autoScrollTimerRef.current);
     const isMobile = window.innerWidth < SM_BREAKPOINT;
     scrollTo(formatRef, isMobile ? 'top' : 'peek-next', 250);
+    if (isMobile) {
+      autoScrollTimerRef.current = setTimeout(() => {
+        scrollTo(packageRef, 'top', 0);
+      }, 5000);
+    }
   }, [classFormat, scrollTo]);
 
   const handleOptionSelect = useCallback((option: OptionSelection) => {
