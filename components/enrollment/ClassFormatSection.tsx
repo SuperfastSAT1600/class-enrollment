@@ -10,13 +10,13 @@ import type { ClassFormat, Category, CategoryId } from '@/types/enrollment';
 interface ClassFormatSectionProps {
   classFormat: ClassFormat | null;
   onSelect: (format: ClassFormat) => void;
-  sectionNumber?: number;
+  sectionNumber: number;
   resolvedCategoryId: CategoryId | null;
   categoryData: Category | undefined;
 }
 
 export const ClassFormatSection = React.forwardRef<HTMLDivElement, ClassFormatSectionProps>(
-  function ClassFormatSection({ classFormat, onSelect, sectionNumber = 3, resolvedCategoryId, categoryData }, ref) {
+  function ClassFormatSection({ classFormat, onSelect, sectionNumber, resolvedCategoryId, categoryData }, ref) {
     const services = resolvedCategoryId ? MANAGEMENT_SERVICES[resolvedCategoryId] : null;
 
     return (

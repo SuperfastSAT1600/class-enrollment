@@ -7,12 +7,12 @@ import { ICON_MAP } from './icons';
 import { SectionHeader } from './SectionHeader';
 import type { ManagementType } from '@/types/enrollment';
 
-const MANAGED_SERVICES = MANAGEMENT_SERVICES['one-on-one'];
+const MANAGED_SERVICE_LIST = MANAGEMENT_SERVICES['one-on-one'];
 const UNMANAGED_SET = new Set(
   MANAGEMENT_SERVICES['unmanaged'].filter((s) => s.included).map((s) => s.name)
 );
 
-const COMPARISON_DATA = MANAGED_SERVICES.map((s) => ({
+const COMPARISON_DATA = MANAGED_SERVICE_LIST.map((s) => ({
   name: s.name,
   managed: s.included,
   unmanaged: UNMANAGED_SET.has(s.name),
@@ -33,11 +33,11 @@ function StatusIcon({ included }: { included: boolean }) {
 interface ManagementTypeSectionProps {
   managementType: ManagementType | null;
   onSelect: (type: ManagementType) => void;
-  sectionNumber?: number;
+  sectionNumber: number;
 }
 
 export const ManagementTypeSection = React.forwardRef<HTMLDivElement, ManagementTypeSectionProps>(
-  function ManagementTypeSection({ managementType, onSelect, sectionNumber = 2 }, ref) {
+  function ManagementTypeSection({ managementType, onSelect, sectionNumber }, ref) {
     return (
       <section ref={ref} className="max-w-3xl mx-auto px-4 sm:px-6 pb-10 sm:pb-16 animate-fade-in scroll-mt-20">
         <SectionHeader number={sectionNumber} title="관리 여부 선택" />

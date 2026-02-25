@@ -67,7 +67,7 @@ export function ProgramTypeSection({ programType, onSelect }: ProgramTypeSection
               key={pt.id}
               selected={programType === pt.id}
               onSelect={() => onSelect(pt.id)}
-              className={`min-h-[140px]`}
+              className="min-h-[140px]"
             >
               {cardContent}
             </RadioCard>

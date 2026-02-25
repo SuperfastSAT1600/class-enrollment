@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react';
-
 type BadgeVariant = 'primary' | 'success' | 'warning' | 'neutral';
 
 interface BadgeProps {

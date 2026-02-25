@@ -292,13 +292,19 @@ export const MANAGEMENT_SERVICES: Record<CategoryId, ManagementService[]> = {
   ],
 };
 
+const FORMAT_TO_CATEGORY: Record<ClassFormat, CategoryId> = {
+  'one-on-one': 'one-on-one',
+  'one-on-three': 'one-on-three',
+  'content': 'content',
+};
+
 export function resolveCategoryId(
   managementType: ManagementType,
   classFormat: ClassFormat | null
 ): CategoryId | null {
   if (managementType === 'unmanaged') return 'unmanaged';
   if (!classFormat) return null;
-  return classFormat as CategoryId;
+  return FORMAT_TO_CATEGORY[classFormat];
 }
 
 export function isHourPackageCategory(id: CategoryId): id is HourPackageCategoryId {
@@ -338,6 +344,7 @@ export function getSelectedOptionSummary(
   }
 
   if (option.type === 'content') {
+    if (option.contentIds.length === 0) return '';
     const names = option.contentIds
       .map((id) => CONTENT_ITEMS.find((c) => c.id === id)?.name)
       .filter(Boolean);

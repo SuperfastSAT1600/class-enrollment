@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -19,6 +19,10 @@ import { SummarySection } from './enrollment/SummarySection';
 import { SummerIntensiveSection } from './enrollment/SummerIntensiveSection';
 import type { ProgramType, ManagementType, ClassFormat, OptionSelection } from '@/types/enrollment';
 
+const SM_BREAKPOINT = 640;
+const HEADER_HEIGHT = { mobile: 56, desktop: 64 };
+const SCROLL_GAP = 16;
+
 export function EnrollmentPage() {
   const [programType, setProgramType] = useState<ProgramType | null>(null);
   const [managementType, setManagementType] = useState<ManagementType | null>(null);
@@ -30,29 +34,33 @@ export function EnrollmentPage() {
   const formatRef = useRef<HTMLDivElement>(null);
   const packageRef = useRef<HTMLDivElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null);
+  const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => { if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current); };
+  }, []);
 
   const scrollTo = useCallback((
     ref: React.RefObject<HTMLDivElement | null>,
     mode: 'top' | 'peek-next' = 'top',
     delay = 200,
   ) => {
-    setTimeout(() => {
+    if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+    scrollTimerRef.current = setTimeout(() => {
       const el = ref.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      const isMobile = window.innerWidth < 640;
-      const headerHeight = isMobile ? 56 : 64;
-      const gap = 16;
+      const isMobile = window.innerWidth < SM_BREAKPOINT;
+      const headerHeight = isMobile ? HEADER_HEIGHT.mobile : HEADER_HEIGHT.desktop;
 
       if (mode === 'peek-next') {
         const peekRatio = isMobile ? 0.75 : 0.82;
         const target = window.scrollY + rect.bottom - window.innerHeight * peekRatio;
-        // 아래로만 스크롤 (이미 보이는 콘텐츠를 위로 밀지 않음)
         if (target > window.scrollY) {
           window.scrollTo({ top: target, behavior: 'smooth' });
         }
       } else {
-        const offset = window.scrollY + rect.top - headerHeight - gap;
+        const offset = window.scrollY + rect.top - headerHeight - SCROLL_GAP;
         window.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
       }
     }, delay);
@@ -128,7 +136,7 @@ export function EnrollmentPage() {
     }
     // 모바일: 카드가 세로 배치 + 인라인 서비스카드라 섹션이 길어서 top으로 이동
     // 데스크톱: 카드가 가로 배치 + 서비스카드가 그리드 아래라 peek-next로 다음 섹션 엿보기
-    const isMobile = window.innerWidth < 640;
+    const isMobile = window.innerWidth < SM_BREAKPOINT;
     scrollTo(formatRef, isMobile ? 'top' : 'peek-next', 250);
   }, [classFormat, scrollTo]);
 
