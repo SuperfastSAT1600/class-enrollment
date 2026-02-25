@@ -7,26 +7,15 @@ import { ICON_MAP } from './icons';
 import { SectionHeader } from './SectionHeader';
 import type { ManagementType } from '@/types/enrollment';
 
-const ALL_SERVICE_NAMES = [
-  '레슨 피드백',
-  '기출문제 제공',
-  '데일리 Vocab',
-  '오답노트',
-  '숙제 일정 관리',
-  '2주 간격 모의시험',
-] as const;
-
-const MANAGED_SET = new Set(
-  MANAGEMENT_SERVICES['one-on-one'].filter((s) => s.included).map((s) => s.name)
-);
+const MANAGED_SERVICES = MANAGEMENT_SERVICES['one-on-one'];
 const UNMANAGED_SET = new Set(
   MANAGEMENT_SERVICES['unmanaged'].filter((s) => s.included).map((s) => s.name)
 );
 
-const COMPARISON_DATA = ALL_SERVICE_NAMES.map((name) => ({
-  name,
-  managed: MANAGED_SET.has(name),
-  unmanaged: UNMANAGED_SET.has(name),
+const COMPARISON_DATA = MANAGED_SERVICES.map((s) => ({
+  name: s.name,
+  managed: s.included,
+  unmanaged: UNMANAGED_SET.has(s.name),
 }));
 
 function StatusIcon({ included }: { included: boolean }) {

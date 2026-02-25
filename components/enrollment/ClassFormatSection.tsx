@@ -1,23 +1,23 @@
 import React from 'react';
 import { RadioCard } from '@/components/ui/RadioCard';
 import { Badge } from '@/components/ui/Badge';
-import { CLASS_FORMATS, MANAGEMENT_SERVICES, CATEGORIES } from '@/lib/data/pricing';
+import { CLASS_FORMATS, MANAGEMENT_SERVICES } from '@/lib/data/pricing';
 import { ICON_MAP } from './icons';
 import { SectionHeader } from './SectionHeader';
 import { ServiceCard } from './ServiceCard';
-import type { ClassFormat, CategoryId } from '@/types/enrollment';
+import type { ClassFormat, Category, CategoryId } from '@/types/enrollment';
 
 interface ClassFormatSectionProps {
   classFormat: ClassFormat | null;
   onSelect: (format: ClassFormat) => void;
   sectionNumber?: number;
   resolvedCategoryId: CategoryId | null;
+  categoryData: Category | undefined;
 }
 
 export const ClassFormatSection = React.forwardRef<HTMLDivElement, ClassFormatSectionProps>(
-  function ClassFormatSection({ classFormat, onSelect, sectionNumber = 3, resolvedCategoryId }, ref) {
+  function ClassFormatSection({ classFormat, onSelect, sectionNumber = 3, resolvedCategoryId, categoryData }, ref) {
     const services = resolvedCategoryId ? MANAGEMENT_SERVICES[resolvedCategoryId] : null;
-    const categoryData = resolvedCategoryId ? CATEGORIES.find((c) => c.id === resolvedCategoryId) : null;
 
     return (
       <section

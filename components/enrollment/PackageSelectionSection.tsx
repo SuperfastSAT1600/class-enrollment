@@ -137,7 +137,7 @@ export const PackageSelectionSection = React.forwardRef<HTMLDivElement, PackageS
                       <p className="text-xs text-white/40">
                         {item.description}
                       </p>
-                      <p className="text-base font-bold" style={{ color: '#6085ff' }}>
+                      <p className="text-base font-bold text-accent-glow">
                         월 {formatWon(item.monthlyPrice)}
                       </p>
                     </div>

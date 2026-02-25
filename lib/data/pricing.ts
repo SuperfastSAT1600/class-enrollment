@@ -15,8 +15,6 @@ import type {
   SummerIntensiveInfo,
 } from '@/types/enrollment';
 
-export const PAYMENT_LINK = 'https://s.tosspayments.com/BnIchv5soiM';
-
 export const PROGRAM_TYPES: ProgramTypeOption[] = [
   {
     id: 'regular',

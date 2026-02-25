@@ -28,7 +28,6 @@ export function EnrollmentPage() {
   const summerRef = useRef<HTMLDivElement>(null);
   const managementTypeRef = useRef<HTMLDivElement>(null);
   const formatRef = useRef<HTMLDivElement>(null);
-  const servicesRef = useRef<HTMLDivElement>(null);
   const packageRef = useRef<HTMLDivElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null);
 
@@ -198,12 +197,12 @@ export function EnrollmentPage() {
             onSelect={handleFormatSelect}
             sectionNumber={3}
             resolvedCategoryId={resolvedCategoryId}
+            categoryData={categoryData}
           />
         )}
 
         {showUnmanagedServices && resolvedCategoryId && (
           <ServicesSection
-            ref={servicesRef}
             resolvedCategoryId={resolvedCategoryId}
             categoryData={categoryData}
             sectionNumber={3}

@@ -14,7 +14,7 @@ const VARIANT_STYLES: Record<BadgeVariant, string> = {
   primary: 'bg-white text-black',
   success: 'bg-emerald-500/15 text-emerald-400',
   warning: 'bg-amber-500/15 text-amber-400',
-  neutral: 'bg-white text-black',
+  neutral: 'bg-white/15 text-white/80',
 };
 
 export function Badge({

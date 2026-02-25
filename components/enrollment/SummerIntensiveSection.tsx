@@ -145,7 +145,9 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
                       if (cell === null) return null;
                       const colorClass = row.isBreak
                         ? 'text-white/40'
-                        : 'text-accent-glow';
+                        : cell.color === 'red'
+                          ? 'text-rose-400'
+                          : 'text-accent-glow';
                       const needsRightBorder =
                         !cell.colSpan && ci === 0 && row.cells.length > 1;
                       return (
