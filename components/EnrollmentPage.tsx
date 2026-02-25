@@ -134,10 +134,8 @@ export function EnrollmentPage() {
     if (changed) {
       setSelectedOption(null);
     }
-    // 모바일: 카드가 세로 배치 + 인라인 서비스카드라 섹션이 길어서 top으로 이동
-    // 데스크톱: 카드가 가로 배치 + 서비스카드가 그리드 아래라 peek-next로 다음 섹션 엿보기
     const isMobile = window.innerWidth < SM_BREAKPOINT;
-    scrollTo(formatRef, isMobile ? 'top' : 'peek-next', 250);
+    scrollTo(isMobile ? packageRef : formatRef, isMobile ? 'top' : 'peek-next', 250);
   }, [classFormat, scrollTo]);
 
   const handleOptionSelect = useCallback((option: OptionSelection) => {
