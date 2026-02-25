@@ -13,10 +13,11 @@ interface ClassFormatSectionProps {
   sectionNumber: number;
   resolvedCategoryId: CategoryId | null;
   categoryData: Category | undefined;
+  serviceCardRef?: React.Ref<HTMLDivElement>;
 }
 
 export const ClassFormatSection = React.forwardRef<HTMLDivElement, ClassFormatSectionProps>(
-  function ClassFormatSection({ classFormat, onSelect, sectionNumber, resolvedCategoryId, categoryData }, ref) {
+  function ClassFormatSection({ classFormat, onSelect, sectionNumber, resolvedCategoryId, categoryData, serviceCardRef }, ref) {
     const services = resolvedCategoryId ? MANAGEMENT_SERVICES[resolvedCategoryId] : null;
 
     return (
@@ -54,7 +55,7 @@ export const ClassFormatSection = React.forwardRef<HTMLDivElement, ClassFormatSe
                 </RadioCard>
                 {/* Mobile: ServiceCard inline after selected card */}
                 {isSelected && services && categoryData && (
-                  <div className="sm:hidden animate-fade-in">
+                  <div ref={serviceCardRef} className="sm:hidden animate-fade-in">
                     <ServiceCard
                       categoryName={categoryData.name}
                       managementLevel={categoryData.managementLevel}

@@ -34,6 +34,7 @@ export function EnrollmentPage() {
   const formatRef = useRef<HTMLDivElement>(null);
   const packageRef = useRef<HTMLDivElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null);
+  const serviceCardRef = useRef<HTMLDivElement>(null);
   const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const autoScrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -145,7 +146,7 @@ export function EnrollmentPage() {
     }
     if (autoScrollTimerRef.current) clearTimeout(autoScrollTimerRef.current);
     const isMobile = window.innerWidth < SM_BREAKPOINT;
-    scrollTo(formatRef, isMobile ? 'center' : 'peek-next', 250);
+    scrollTo(isMobile ? serviceCardRef : formatRef, isMobile ? 'center' : 'peek-next', 250);
     if (isMobile) {
       autoScrollTimerRef.current = setTimeout(() => {
         scrollTo(packageRef, 'top', 0);
@@ -219,6 +220,7 @@ export function EnrollmentPage() {
             sectionNumber={3}
             resolvedCategoryId={resolvedCategoryId}
             categoryData={categoryData}
+            serviceCardRef={serviceCardRef}
           />
         )}
 
