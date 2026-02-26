@@ -120,7 +120,7 @@ export const SUMMER_INTENSIVE_DATA: SummerIntensiveInfo = {
       },
     ],
   },
-  timezoneNotice: '미국 등 해외 거주 학생은 해당 시차에 맞추어 클래스 개설됩니다.',
+  timezoneNotice: '한국시간(KST) 기준입니다. 미국 등 해외 거주 학생은 해당 시차에 맞추어 클래스 개설됩니다.',
 };
 
 export const MANAGEMENT_TYPES: ManagementTypeOption[] = [
