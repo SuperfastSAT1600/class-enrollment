@@ -36,7 +36,7 @@ export const PROGRAM_TYPES: ProgramTypeOption[] = [
 
 export const SUMMER_INTENSIVE_DATA: SummerIntensiveInfo = {
   startDate: '6월 8일',
-  earlyBird: { discount: 15, deadline: '2.28' },
+  earlyBird: { discount: 10, deadline: '3.31' },
   philosophy: [
     {
       title: '개념 우선',
@@ -166,34 +166,19 @@ export const CLASS_FORMATS: ClassFormatOption[] = [
   },
 ];
 
+const FORMAT_EXTRAS: Record<ClassFormat, { subtitle: string; managementLevel: string }> = {
+  'one-on-one': { subtitle: '풀 관리', managementLevel: '풀 관리' },
+  'one-on-three': { subtitle: '관리 포함', managementLevel: '관리 포함' },
+  'content': { subtitle: '부분 관리', managementLevel: '부분 관리' },
+};
+
 export const CATEGORIES: Category[] = [
+  ...CLASS_FORMATS.map((cf) => ({
+    ...cf,
+    ...FORMAT_EXTRAS[cf.id],
+  })),
   {
-    id: 'one-on-one',
-    name: '1:1 수업',
-    subtitle: '풀 관리',
-    description: '전담 코치와 1:1 맞춤 수업 + 전체 관리 서비스',
-    managementLevel: '풀 관리',
-    icon: 'UserCheck',
-    recommended: true,
-  },
-  {
-    id: 'one-on-three',
-    name: '1:3 수업',
-    subtitle: '관리 포함',
-    description: '소규모 그룹 수업 + 커리큘럼별 관리 서비스',
-    managementLevel: '관리 포함',
-    icon: 'Users',
-  },
-  {
-    id: 'content',
-    name: '콘텐츠',
-    subtitle: '부분 관리',
-    description: '인강, 단어, 문제풀이 등 월간 구독 콘텐츠',
-    managementLevel: '부분 관리',
-    icon: 'MonitorPlay',
-  },
-  {
-    id: 'unmanaged',
+    id: 'unmanaged' as CategoryId,
     name: '비관리',
     subtitle: '레슨 피드백만',
     description: '수업 후 레슨 피드백만 제공되는 합리적 옵션',
@@ -292,19 +277,12 @@ export const MANAGEMENT_SERVICES: Record<CategoryId, ManagementService[]> = {
   ],
 };
 
-const FORMAT_TO_CATEGORY: Record<ClassFormat, CategoryId> = {
-  'one-on-one': 'one-on-one',
-  'one-on-three': 'one-on-three',
-  'content': 'content',
-};
-
 export function resolveCategoryId(
   managementType: ManagementType,
   classFormat: ClassFormat | null
 ): CategoryId | null {
   if (managementType === 'unmanaged') return 'unmanaged';
-  if (!classFormat) return null;
-  return FORMAT_TO_CATEGORY[classFormat];
+  return classFormat ?? null;
 }
 
 export function isHourPackageCategory(id: CategoryId): id is HourPackageCategoryId {
