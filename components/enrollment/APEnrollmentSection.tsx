@@ -52,10 +52,11 @@ export function APEnrollmentSection() {
                   {badge && <Badge variant={badge.variant}>{badge.text}</Badge>}
                 </div>
                 <h4 className={`text-lg font-bold ${CARD_ACCENT[pkg.id]} mb-1`}>
-                  {pkg.name} <span className="text-white/50 font-medium text-sm">{pkg.hours}시간</span>
+                  {pkg.name}
                 </h4>
-                <p className="text-2xl font-bold text-white">
+                <p className="text-2xl font-bold text-white flex items-baseline gap-2">
                   {formatPrice(pkg.price)}
+                  <span className="text-sm font-medium text-white/40 tracking-wide">({pkg.hours}시간)</span>
                 </p>
                 {pkg.discountRate && (
                   <p className="mt-3 text-sm font-bold text-rose-400">
