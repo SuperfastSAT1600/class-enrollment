@@ -23,7 +23,7 @@ export const AP_PACKAGES: APPackage[] = [
 ];
 
 export const AP_SUBJECTS = [
-  'Bio', 'Calculus', 'Chemistry', 'CS A', 'Stat', 'World History',
+  'Bio', 'Calculus', 'Chemistry', 'CS A', 'Statistics', 'World History',
 ] as const;
 
 export const PROGRAM_TYPES: ProgramTypeOption[] = [
