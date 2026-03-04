@@ -22,7 +22,9 @@ export function CourseTypeToggle({ courseType, onChange }: CourseTypeToggleProps
             onClick={() => onChange(opt.id)}
             className={`px-8 py-2.5 rounded-full text-base font-semibold transition-all duration-200 ${
               courseType === opt.id
-                ? 'bg-accent text-white shadow-clay-button'
+                ? opt.id === 'ap'
+                  ? 'bg-red-600 text-white shadow-clay-button'
+                  : 'bg-accent text-white shadow-clay-button'
                 : 'text-white/60 hover:text-white/80'
             }`}
           >
