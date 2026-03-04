@@ -51,10 +51,6 @@ export const APEnrollmentSection = React.forwardRef<HTMLDivElement>(
                 <ul className="space-y-2 text-sm text-white/70">
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
-                    {pkg.subjects}과목
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
                     일대일 {pkg.hours}시간
                   </li>
                 </ul>
