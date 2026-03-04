@@ -135,7 +135,7 @@ export function EnrollmentPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-page">
-      <Header />
+      <Header courseType={courseType} />
 
       <main className="flex-1">
         <CourseTypeToggle courseType={courseType} onChange={handleCourseTypeChange} />
