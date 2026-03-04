@@ -4,9 +4,9 @@ import { AP_PACKAGES, AP_SUBJECTS } from '@/lib/data/pricing';
 import { APCustomHourSection } from './APCustomHourSection';
 
 const CARD_STYLES: Record<string, string> = {
-  'ap-lite': 'from-amber-500/20 to-yellow-600/10 border-amber-500/30',
-  'ap-standard': 'from-slate-400/20 to-gray-500/10 border-slate-400/30 ring-1 ring-accent-glow/30',
-  'ap-booster': 'from-red-500/20 to-rose-600/10 border-red-500/30',
+  'ap-lite': 'border-border-strong',
+  'ap-standard': 'border-border-strong ring-1 ring-accent-glow/30',
+  'ap-booster': 'border-border-strong',
 };
 
 const CARD_ACCENT: Record<string, string> = {
@@ -46,7 +46,7 @@ export function APEnrollmentSection() {
             return (
               <div
                 key={pkg.id}
-                className={`rounded-card border bg-gradient-to-br ${CARD_STYLES[pkg.id]} p-5 shadow-clay relative`}
+                className={`rounded-card border bg-clay-solid ${CARD_STYLES[pkg.id]} p-5 shadow-clay relative`}
               >
                 <div className="h-5 mb-2">
                   {badge && <Badge variant={badge.variant}>{badge.text}</Badge>}
