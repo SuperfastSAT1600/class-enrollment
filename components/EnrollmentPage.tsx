@@ -142,7 +142,7 @@ export function EnrollmentPage() {
 
         {/* Hero */}
         <section className="pt-12 sm:pt-20 pb-8 sm:pb-12 text-center px-4">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
             {courseType === 'sat'
               ? '아이에게 맞는 수업을 선택하세요'
               : '관리형 AP의 기준'}
