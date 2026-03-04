@@ -36,22 +36,6 @@ export const APEnrollmentSection = React.forwardRef<HTMLDivElement>(
   function APEnrollmentSection(_props, ref) {
     return (
       <section ref={ref} className="max-w-3xl mx-auto px-4 sm:px-6 pb-10 sm:pb-16 animate-fade-in scroll-mt-20">
-        {/* Social Proof Banner */}
-        <div className="rounded-card border border-accent-glow/20 bg-accent-glow/5 p-4 sm:p-5 mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-accent-glow/15 flex items-center justify-center flex-shrink-0">
-                <TrendingUp className="w-5 h-5 text-accent-glow" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-white">AP 전문 코치 1:1 수업</p>
-                <p className="text-xs text-white/50">과목별 전문 코치가 학생 수준에 맞춰 커리큘럼을 설계합니다</p>
-              </div>
-            </div>
-            <Badge variant="warning">소수 정원제</Badge>
-          </div>
-        </div>
-
         {/* Package Cards */}
         <div className="mb-8">
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
