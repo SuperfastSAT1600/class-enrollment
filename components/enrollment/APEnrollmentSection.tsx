@@ -116,7 +116,7 @@ export function APEnrollmentSection() {
       <div className="text-center">
         <div className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-accent text-white shadow-clay-button w-full sm:w-auto min-w-[280px]">
           <MessageCircle className="w-5 h-5" />
-          AP 수업 상담 신청하기
+          원장님과 AP 로드맵 상담하기
         </div>
         <p className="mt-3 text-xs text-white/40">
           과목 선택과 맞춤 커리큘럼 상담을 받으실 수 있습니다
