@@ -43,7 +43,7 @@ export function APCustomHourSection() {
             원하는 시간만큼 등록하고 성과내세요.
           </h3>
           <p className="text-xs text-white/40 mt-1">
-            시간이 많을수록 시간당 단가가 낮아집니다
+            충분한 시간을 투자할수록 확실한 성과로 돌아옵니다
           </p>
         </div>
 
