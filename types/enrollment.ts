@@ -9,6 +9,7 @@ export interface APPackage {
   discountRate?: number;
   subjects: number;
   hours: number;
+  salesLabel?: 'entry' | 'popular' | 'bestValue';
 }
 
 export interface APSubject {

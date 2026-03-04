@@ -18,9 +18,9 @@ import type {
 } from '@/types/enrollment';
 
 export const AP_PACKAGES: APPackage[] = [
-  { id: 'ap-lite', name: 'Lite', price: 1440000, subjects: 1, hours: 16 },
-  { id: 'ap-standard', name: 'Standard', price: 2720000, discountRate: 6, subjects: 2, hours: 32 },
-  { id: 'ap-booster', name: 'Booster', price: 3840000, discountRate: 12, subjects: 2, hours: 48 },
+  { id: 'ap-lite', name: 'Lite', price: 1440000, subjects: 1, hours: 16, salesLabel: 'entry' },
+  { id: 'ap-standard', name: 'Standard', price: 2720000, discountRate: 6, subjects: 2, hours: 32, salesLabel: 'popular' },
+  { id: 'ap-booster', name: 'Booster', price: 3840000, discountRate: 12, subjects: 2, hours: 48, salesLabel: 'bestValue' },
 ];
 
 export const AP_SUBJECTS: APSubject[] = [
