@@ -12,17 +12,28 @@ function formatWon(amount: number): string {
 
 export function APCustomHourSection() {
   const [hours, setHours] = useState(24);
+  const [inputText, setInputText] = useState('24');
   const price = getAPCustomPrice(hours);
 
   function handleSlider(e: React.ChangeEvent<HTMLInputElement>) {
-    setHours(Number(e.target.value));
+    const val = Number(e.target.value);
+    setHours(val);
+    setInputText(String(val));
   }
 
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
+    setInputText(e.target.value);
     const val = parseInt(e.target.value, 10);
     if (!isNaN(val)) {
       setHours(Math.max(1, Math.min(60, val)));
     }
+  }
+
+  function handleInputBlur() {
+    const val = parseInt(inputText, 10);
+    const clamped = isNaN(val) ? 1 : Math.max(1, Math.min(60, val));
+    setHours(clamped);
+    setInputText(String(clamped));
   }
 
   // Calculate slider fill percentage for gradient track
@@ -85,8 +96,9 @@ export function APCustomHourSection() {
                 type="number"
                 min={1}
                 max={60}
-                value={hours}
+                value={inputText}
                 onChange={handleInput}
+                onBlur={handleInputBlur}
                 className="w-14 text-center text-white font-bold text-lg bg-white/5 border border-border-strong rounded-lg px-1.5 py-1
                   focus:outline-none focus:border-accent-glow/50 focus:ring-1 focus:ring-accent-glow/30
                   [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -101,7 +113,7 @@ export function APCustomHourSection() {
               <button
                 key={tier.minHours}
                 type="button"
-                onClick={() => setHours(tier.minHours)}
+                onClick={() => { setHours(tier.minHours); setInputText(String(tier.minHours)); }}
                 className={`text-[11px] px-2 py-0.5 rounded-full border transition-colors ${
                   idx === tierIdx
                     ? 'border-accent-glow/50 bg-accent-glow/15 text-accent-glow'
