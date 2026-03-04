@@ -93,7 +93,7 @@ export const APEnrollmentSection = React.forwardRef<HTMLDivElement>(
               },
               {
                 icon: TrendingUp,
-                title: '체계적 관리',
+                title: '성과형 관리',
                 desc: '진도 체크와 과제 피드백으로 학습 효율을 높입니다',
               },
             ].map((item) => (
