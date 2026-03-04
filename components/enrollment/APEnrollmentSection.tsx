@@ -84,7 +84,7 @@ export const APEnrollmentSection = React.forwardRef<HTMLDivElement>(
               {
                 icon: Star,
                 title: '과목별 전문 코치',
-                desc: 'AP 고득점 경험이 있는 코치가 직접 수업합니다',
+                desc: 'AP 전문 코치가 직접 수업합니다.',
               },
               {
                 icon: ShieldCheck,
