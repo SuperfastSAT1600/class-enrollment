@@ -14,7 +14,6 @@ import type {
   OptionSelection,
   SummerIntensiveInfo,
   APPackage,
-  APSubject,
 } from '@/types/enrollment';
 
 export const AP_PACKAGES: APPackage[] = [
@@ -23,14 +22,9 @@ export const AP_PACKAGES: APPackage[] = [
   { id: 'ap-booster', name: 'Booster', price: 3840000, discountRate: 12, subjects: 2, hours: 48, salesLabel: 'bestValue' },
 ];
 
-export const AP_SUBJECTS: APSubject[] = [
-  { name: 'Bio' },
-  { name: 'Calculus' },
-  { name: 'Chemistry' },
-  { name: 'CS A' },
-  { name: 'Stat' },
-  { name: 'World History' },
-];
+export const AP_SUBJECTS = [
+  'Bio', 'Calculus', 'Chemistry', 'CS A', 'Stat', 'World History',
+] as const;
 
 export const PROGRAM_TYPES: ProgramTypeOption[] = [
   {

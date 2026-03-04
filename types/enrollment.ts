@@ -12,9 +12,6 @@ export interface APPackage {
   salesLabel?: 'entry' | 'popular' | 'bestValue';
 }
 
-export interface APSubject {
-  name: string;
-}
 
 export interface ProgramTypeOption {
   id: ProgramType;
