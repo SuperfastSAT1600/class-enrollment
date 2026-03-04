@@ -150,7 +150,7 @@ export function EnrollmentPage() {
           <p className="text-sm sm:text-base text-white/60 max-w-xl mx-auto mb-6">
             {courseType === 'sat'
               ? '단계별로 선택하면 나에게 딱 맞는 수업권을 찾을 수 있습니다.'
-              : '과목별 전문 코치와 함께하는 1:1 AP 수업 프로그램입니다.'}
+              : '과목별 전문 코치와 함께하는 1:1수업 AP 프로그램입니다.'}
           </p>
           <ChevronDown className="w-5 h-5 text-white/30 mx-auto animate-bounce" />
         </section>

@@ -59,7 +59,7 @@ export function APEnrollmentSection() {
                 <ul className="space-y-2 text-sm text-white/70">
                   <li className="flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5 text-white/40" />
-                    1:1 {pkg.hours}시간
+                    1:1수업 {pkg.hours}시간
                   </li>
                 </ul>
                 {pkg.discountRate && (
