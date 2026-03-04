@@ -1,6 +1,7 @@
 import { BookOpen, Users, MessageCircle, TrendingUp, Clock, Star, ShieldCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { AP_PACKAGES, AP_SUBJECTS } from '@/lib/data/pricing';
+import { APCustomHourSection } from './APCustomHourSection';
 
 const CARD_STYLES: Record<string, string> = {
   'ap-lite': 'from-amber-500/20 to-yellow-600/10 border-amber-500/30',
@@ -72,6 +73,9 @@ export function APEnrollmentSection() {
           })}
         </div>
       </div>
+
+      {/* Custom Hour Calculator */}
+      <APCustomHourSection />
 
       {/* Why AP with Us */}
       <div className="mb-8">

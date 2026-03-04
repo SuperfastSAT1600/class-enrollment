@@ -288,6 +288,31 @@ export const MANAGEMENT_SERVICES: Record<CategoryId, ManagementService[]> = {
   ],
 };
 
+// AP Custom Hour Pricing
+export const AP_BASE_PRICE_PER_HOUR = 90000;
+
+export const AP_PRICE_TIERS = [
+  { minHours: 1, maxHours: 16, pricePerHour: 90000, discountRate: 0 },
+  { minHours: 17, maxHours: 32, pricePerHour: 85000, discountRate: 6 },
+  { minHours: 33, maxHours: 48, pricePerHour: 80000, discountRate: 12 },
+  { minHours: 49, maxHours: 60, pricePerHour: 75000, discountRate: 17 },
+] as const;
+
+export function getAPCustomPrice(hours: number) {
+  const clamped = Math.max(1, Math.min(60, Math.round(hours)));
+  const tier = AP_PRICE_TIERS.find((t) => clamped >= t.minHours && clamped <= t.maxHours)!;
+  const baseTotal = clamped * AP_BASE_PRICE_PER_HOUR;
+  const totalPrice = clamped * tier.pricePerHour;
+  return {
+    hours: clamped,
+    pricePerHour: tier.pricePerHour,
+    discountRate: tier.discountRate,
+    baseTotal,
+    totalPrice,
+    discountAmount: baseTotal - totalPrice,
+  };
+}
+
 export function resolveCategoryId(
   managementType: ManagementType,
   classFormat: ClassFormat | null
