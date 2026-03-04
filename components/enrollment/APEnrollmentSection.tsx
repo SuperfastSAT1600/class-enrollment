@@ -1,4 +1,4 @@
-import { BookOpen, Users, MessageCircle, TrendingUp, Clock, Star, ShieldCheck } from 'lucide-react';
+import { BookOpen, Users, MessageCircle, TrendingUp, Star, ShieldCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { AP_PACKAGES, AP_SUBJECTS } from '@/lib/data/pricing';
 import { APCustomHourSection } from './APCustomHourSection';
@@ -10,9 +10,9 @@ const CARD_STYLES: Record<string, string> = {
 };
 
 const CARD_ACCENT: Record<string, string> = {
-  'ap-lite': 'text-white',
-  'ap-standard': 'text-white',
-  'ap-booster': 'text-white',
+  'ap-lite': 'text-indigo-400',
+  'ap-standard': 'text-indigo-400',
+  'ap-booster': 'text-indigo-400',
 };
 
 const SALES_BADGE: Record<string, { text: string; variant: 'warning' | 'success' | 'primary' }> = {
@@ -52,17 +52,11 @@ export function APEnrollmentSection() {
                   {badge && <Badge variant={badge.variant}>{badge.text}</Badge>}
                 </div>
                 <h4 className={`text-lg font-bold ${CARD_ACCENT[pkg.id]} mb-1`}>
-                  {pkg.name}
+                  {pkg.name} <span className="text-white/50 font-medium text-sm">{pkg.hours}시간</span>
                 </h4>
-                <p className="text-2xl font-bold text-white mb-4">
+                <p className="text-2xl font-bold text-white">
                   {formatPrice(pkg.price)}
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
-                  <li className="flex items-center gap-2">
-                    <Clock className="w-3.5 h-3.5 text-white/40" />
-                    1:1수업 {pkg.hours}시간
-                  </li>
-                </ul>
                 {pkg.discountRate && (
                   <p className="mt-3 text-sm font-bold text-rose-400">
                     -{pkg.discountRate}% 할인 적용가
