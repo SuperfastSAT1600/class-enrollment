@@ -10,9 +10,9 @@ const CARD_STYLES: Record<string, string> = {
 };
 
 const CARD_ACCENT: Record<string, string> = {
-  'ap-lite': 'text-indigo-400',
-  'ap-standard': 'text-indigo-400',
-  'ap-booster': 'text-indigo-400',
+  'ap-lite': 'text-indigo-300',
+  'ap-standard': 'text-indigo-300',
+  'ap-booster': 'text-indigo-300',
 };
 
 const SALES_BADGE: Record<string, { text: string; variant: 'warning' | 'success' | 'primary' }> = {
@@ -56,7 +56,7 @@ export function APEnrollmentSection() {
                 </h4>
                 <p className="text-2xl font-bold text-white flex items-baseline gap-2">
                   {formatPrice(pkg.price)}
-                  <span className="text-sm font-medium text-white/40 tracking-wide">({pkg.hours}시간)</span>
+                  <span className="text-sm font-medium text-white/60 tracking-wide">({pkg.hours}시간)</span>
                 </p>
                 {pkg.discountRate && (
                   <p className="mt-3 text-sm font-bold text-rose-400">
@@ -84,7 +84,7 @@ export function APEnrollmentSection() {
                 <item.icon className="w-4 h-4 text-accent-glow" />
               </div>
               <h4 className="font-semibold text-white text-sm mb-1">{item.title}</h4>
-              <p className="text-xs text-white/50 leading-relaxed">{item.desc}</p>
+              <p className="text-xs text-white/70 leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -99,14 +99,14 @@ export function APEnrollmentSection() {
         <div className="rounded-card border border-border-strong bg-clay-solid shadow-clay overflow-hidden">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-5">
             {AP_SUBJECTS.map((name) => (
-              <div key={name} className="flex items-center gap-2 text-sm text-white/70">
+              <div key={name} className="flex items-center gap-2 text-sm text-white/80">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-glow" />
                 {name}
               </div>
             ))}
           </div>
         </div>
-        <p className="mt-2 text-xs text-white/30 text-center">
+        <p className="mt-2 text-xs text-white/50 text-center">
           위 과목 외 추가 과목은 상담 시 문의해 주세요
         </p>
       </div>
@@ -117,7 +117,7 @@ export function APEnrollmentSection() {
           <MessageCircle className="w-5 h-5" />
           원장님과 AP 로드맵 상담하세요
         </div>
-        <p className="mt-3 text-xs text-white/40">
+        <p className="mt-3 text-xs text-white/60">
           과목 선택과 맞춤 커리큘럼 상담을 받으실 수 있습니다
         </p>
       </div>

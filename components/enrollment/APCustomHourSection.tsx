@@ -53,7 +53,7 @@ export function APCustomHourSection() {
             <Sparkles className="w-4.5 h-4.5 text-accent-glow" />
             원하는 시간만큼 등록하고 성과내세요.
           </h3>
-          <p className="text-xs text-white/40 mt-1">
+          <p className="text-xs text-white/60 mt-1">
             충분한 시간을 투자할수록 확실한 성과로 돌아옵니다
           </p>
         </div>
@@ -84,11 +84,11 @@ export function APCustomHourSection() {
               />
               {/* Tier markers */}
               <div className="flex justify-between mt-1.5 px-0.5">
-                <span className="text-[10px] text-white/30">1</span>
-                <span className="text-[10px] text-white/30">16</span>
-                <span className="text-[10px] text-white/30">32</span>
-                <span className="text-[10px] text-white/30">48</span>
-                <span className="text-[10px] text-white/30">60</span>
+                <span className="text-[10px] text-white/50">1</span>
+                <span className="text-[10px] text-white/50">16</span>
+                <span className="text-[10px] text-white/50">32</span>
+                <span className="text-[10px] text-white/50">48</span>
+                <span className="text-[10px] text-white/50">60</span>
               </div>
             </div>
             <div className="flex items-center gap-1.5 shrink-0">
@@ -103,7 +103,7 @@ export function APCustomHourSection() {
                   focus:outline-none focus:border-accent-glow/50 focus:ring-1 focus:ring-accent-glow/30
                   [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
-              <span className="text-sm text-white/50">시간</span>
+              <span className="text-sm text-white/70">시간</span>
             </div>
           </div>
 
@@ -117,7 +117,7 @@ export function APCustomHourSection() {
                 className={`text-[11px] px-2 py-0.5 rounded-full border transition-colors ${
                   idx === tierIdx
                     ? 'border-accent-glow/50 bg-accent-glow/15 text-accent-glow'
-                    : 'border-white/10 bg-white/5 text-white/40 hover:text-white/60'
+                    : 'border-white/10 bg-white/5 text-white/60 hover:text-white/80'
                 }`}
               >
                 {tier.minHours}~{tier.maxHours}h
@@ -130,23 +130,23 @@ export function APCustomHourSection() {
         {/* Price summary */}
         <div className="border-t border-border-strong bg-white/[0.02] px-5 py-4">
           <div className="grid grid-cols-2 gap-y-2.5 text-sm">
-            <span className="text-white/50">수업 시간</span>
+            <span className="text-white/70">수업 시간</span>
             <span className="text-right text-white font-semibold">{price.hours}시간</span>
 
-            <span className="text-white/50">시간당 가격</span>
+            <span className="text-white/70">시간당 가격</span>
             <span className="text-right text-white font-semibold">
               {price.pricePerHour.toLocaleString()}원
             </span>
 
-            <span className="text-white/50">할인율</span>
-            <span className={`text-right font-semibold ${price.discountRate > 0 ? 'text-rose-400' : 'text-white/40'}`}>
+            <span className="text-white/70">할인율</span>
+            <span className={`text-right font-semibold ${price.discountRate > 0 ? 'text-rose-400' : 'text-white/60'}`}>
               {price.discountRate > 0 ? `-${price.discountRate}%` : '—'}
             </span>
           </div>
 
           <div className="border-t border-border-strong mt-3 pt-3 flex items-end justify-between">
             <div>
-              <p className="text-xs text-white/40">총 금액</p>
+              <p className="text-xs text-white/60">총 금액</p>
               <p className="text-xl font-bold text-white">{formatWon(price.totalPrice)}</p>
             </div>
             {price.discountAmount > 0 && (
