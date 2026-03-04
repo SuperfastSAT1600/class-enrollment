@@ -18,9 +18,9 @@ export function Header({ courseType = 'sat' }: HeaderProps) {
           <Image
             src={logo}
             alt={alt}
-            width={180}
-            height={36}
-            className="h-7 sm:h-8 w-auto"
+            width={200}
+            height={32}
+            className="h-8 w-[200px] object-contain"
             priority
           />
         </div>
