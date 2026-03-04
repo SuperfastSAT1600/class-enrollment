@@ -10,9 +10,9 @@ const CARD_STYLES: Record<string, string> = {
 };
 
 const CARD_ACCENT: Record<string, string> = {
-  'ap-lite': 'text-amber-400',
-  'ap-standard': 'text-slate-300',
-  'ap-booster': 'text-red-400',
+  'ap-lite': 'text-white',
+  'ap-standard': 'text-white',
+  'ap-booster': 'text-white',
 };
 
 const SALES_BADGE: Record<string, { text: string; variant: 'warning' | 'success' | 'primary' }> = {
