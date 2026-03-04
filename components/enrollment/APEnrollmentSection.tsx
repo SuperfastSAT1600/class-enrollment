@@ -70,25 +70,17 @@ export const APEnrollmentSection = React.forwardRef<HTMLDivElement>(
             진행 가능 과목
           </h3>
           <div className="rounded-card border border-border-strong bg-clay-solid shadow-clay overflow-hidden">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-border-strong">
-                  <th className="text-left text-sm font-semibold text-white/80 px-5 py-3">과목</th>
-                  <th className="text-right text-sm font-semibold text-white/80 px-5 py-3">코치 수</th>
-                </tr>
-              </thead>
-              <tbody>
-                {AP_SUBJECTS.map((subject, idx) => (
-                  <tr
-                    key={subject.name}
-                    className={idx < AP_SUBJECTS.length - 1 ? 'border-b border-border-strong/50' : ''}
-                  >
-                    <td className="text-sm text-white/70 px-5 py-3">{subject.name}</td>
-                    <td className="text-sm text-white/70 text-right px-5 py-3">{subject.coaches}명</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-5">
+              {AP_SUBJECTS.map((subject) => (
+                <div
+                  key={subject.name}
+                  className="flex items-center gap-2 text-sm text-white/70"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent-glow" />
+                  {subject.name}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

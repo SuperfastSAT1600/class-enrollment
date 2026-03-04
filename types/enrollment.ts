@@ -13,7 +13,6 @@ export interface APPackage {
 
 export interface APSubject {
   name: string;
-  coaches: number;
 }
 
 export interface ProgramTypeOption {

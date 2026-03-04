@@ -24,12 +24,12 @@ export const AP_PACKAGES: APPackage[] = [
 ];
 
 export const AP_SUBJECTS: APSubject[] = [
-  { name: 'Bio', coaches: 2 },
-  { name: 'Calculus', coaches: 1 },
-  { name: 'Chemistry', coaches: 2 },
-  { name: 'CS A', coaches: 1 },
-  { name: 'Stat', coaches: 1 },
-  { name: 'World History', coaches: 1 },
+  { name: 'Bio' },
+  { name: 'Calculus' },
+  { name: 'Chemistry' },
+  { name: 'CS A' },
+  { name: 'Stat' },
+  { name: 'World History' },
 ];
 
 export const PROGRAM_TYPES: ProgramTypeOption[] = [
