@@ -1,4 +1,20 @@
+export type CourseType = 'sat' | 'ap';
+
 export type ProgramType = 'regular' | 'summer-intensive';
+
+export interface APPackage {
+  id: string;
+  name: string;
+  price: number;
+  discountRate?: number;
+  subjects: number;
+  hours: number;
+}
+
+export interface APSubject {
+  name: string;
+  coaches: number;
+}
 
 export interface ProgramTypeOption {
   id: ProgramType;

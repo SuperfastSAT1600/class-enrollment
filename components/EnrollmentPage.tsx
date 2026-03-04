@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -16,13 +16,13 @@ import { ClassFormatSection } from './enrollment/ClassFormatSection';
 import { PackageSelectionSection } from './enrollment/PackageSelectionSection';
 import { SummarySection } from './enrollment/SummarySection';
 import { SummerIntensiveSection } from './enrollment/SummerIntensiveSection';
-import type { ProgramType, ManagementType, ClassFormat, OptionSelection } from '@/types/enrollment';
-
-const SM_BREAKPOINT = 640;
-const HEADER_HEIGHT = { mobile: 56, desktop: 64 };
-const SCROLL_GAP = 16;
+import { CourseTypeToggle } from './enrollment/CourseTypeToggle';
+import { APEnrollmentSection } from './enrollment/APEnrollmentSection';
+import { useScrollBehavior } from '@/hooks/useScrollBehavior';
+import type { CourseType, ProgramType, ManagementType, ClassFormat, OptionSelection } from '@/types/enrollment';
 
 export function EnrollmentPage() {
+  const [courseType, setCourseType] = useState<CourseType>('sat');
   const [programType, setProgramType] = useState<ProgramType | null>(null);
   const [managementType, setManagementType] = useState<ManagementType | null>(null);
   const [classFormat, setClassFormat] = useState<ClassFormat | null>(null);
@@ -34,46 +34,8 @@ export function EnrollmentPage() {
   const packageRef = useRef<HTMLDivElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null);
   const serviceCardRef = useRef<HTMLDivElement>(null);
-  const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const autoScrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    return () => {
-      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
-      if (autoScrollTimerRef.current) clearTimeout(autoScrollTimerRef.current);
-    };
-  }, []);
-
-  const scrollTo = useCallback((
-    ref: React.RefObject<HTMLDivElement | null>,
-    mode: 'top' | 'peek-next' | 'center' = 'top',
-    delay = 200,
-  ) => {
-    if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
-    scrollTimerRef.current = setTimeout(() => {
-      const el = ref.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const isMobile = window.innerWidth < SM_BREAKPOINT;
-      const headerHeight = isMobile ? HEADER_HEIGHT.mobile : HEADER_HEIGHT.desktop;
-
-      if (mode === 'peek-next') {
-        const peekRatio = isMobile ? 0.75 : 0.82;
-        const target = window.scrollY + rect.bottom - window.innerHeight * peekRatio;
-        if (target > window.scrollY) {
-          window.scrollTo({ top: target, behavior: 'smooth' });
-        }
-      } else if (mode === 'center') {
-        const elCenter = window.scrollY + rect.top + rect.height / 2;
-        const viewCenter = (window.innerHeight + headerHeight) / 2;
-        const offset = elCenter - viewCenter;
-        window.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
-      } else {
-        const offset = window.scrollY + rect.top - headerHeight - SCROLL_GAP;
-        window.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
-      }
-    }, delay);
-  }, []);
+  const { scrollTo, autoScrollTimerRef } = useScrollBehavior();
 
   const resolvedCategoryId = useMemo(
     () => (managementType ? resolveCategoryId(managementType, classFormat) : null),
@@ -101,7 +63,15 @@ export function EnrollmentPage() {
     return true;
   }, [selectedOption]);
 
-  const isMonthly = selectedOption?.type === 'content';
+  const handleCourseTypeChange = useCallback((type: CourseType) => {
+    setCourseType(type);
+    if (type === 'ap') {
+      setProgramType(null);
+      setManagementType(null);
+      setClassFormat(null);
+      setSelectedOption(null);
+    }
+  }, []);
 
   const handleProgramSelect = useCallback((type: ProgramType) => {
     const changed = type !== programType;
@@ -113,11 +83,7 @@ export function EnrollmentPage() {
       setSelectedOption(null);
     }
 
-    if (type === 'regular') {
-      scrollTo(managementTypeRef, 'top', 250);
-    } else if (type === 'summer-intensive') {
-      scrollTo(summerRef, 'top', 250);
-    }
+    scrollTo(type === 'regular' ? managementTypeRef : summerRef, 'top', 250);
   }, [programType, scrollTo]);
 
   const handleManagementSelect = useCallback((type: ManagementType) => {
@@ -126,37 +92,28 @@ export function EnrollmentPage() {
 
     if (changed) {
       setSelectedOption(null);
-
-      if (type === 'unmanaged') {
-        setClassFormat('one-on-one');
-      } else {
-        setClassFormat(null);
-      }
+      setClassFormat(type === 'unmanaged' ? 'one-on-one' : null);
     }
-    // 비교차트 보여주고 다음 섹션 살짝 보이게
     scrollTo(managementTypeRef, 'peek-next');
   }, [managementType, scrollTo]);
 
   const handleFormatSelect = useCallback((format: ClassFormat) => {
     const changed = format !== classFormat;
     setClassFormat(format);
-    if (changed) {
-      setSelectedOption(null);
-    }
-    if (autoScrollTimerRef.current) clearTimeout(autoScrollTimerRef.current);
-    const isMobile = window.innerWidth < SM_BREAKPOINT;
+    if (changed) setSelectedOption(null);
+
+    const isMobile = window.innerWidth < 640;
     scrollTo(isMobile ? serviceCardRef : formatRef, isMobile ? 'center' : 'peek-next', 250);
-    if (isMobile) {
-      autoScrollTimerRef.current = setTimeout(() => {
-        scrollTo(packageRef, 'top', 0);
-      }, 3000);
+
+    if (isMobile && changed) {
+      if (autoScrollTimerRef.current) clearTimeout(autoScrollTimerRef.current);
+      autoScrollTimerRef.current = setTimeout(() => scrollTo(packageRef, 'top', 0), 3000);
     }
-  }, [classFormat, scrollTo]);
+  }, [classFormat, scrollTo, autoScrollTimerRef]);
 
   const handleOptionSelect = useCallback((option: OptionSelection) => {
     setSelectedOption(option);
     if (option.type !== 'content') {
-      // 요약 섹션으로 이동 (새로 렌더링되므로 딜레이 약간 더)
       scrollTo(summaryRef, 'top', 300);
     }
   }, [scrollTo]);
@@ -181,73 +138,86 @@ export function EnrollmentPage() {
       <Header />
 
       <main className="flex-1">
+        <CourseTypeToggle courseType={courseType} onChange={handleCourseTypeChange} />
+
         {/* Hero */}
         <section className="pt-12 sm:pt-20 pb-8 sm:pb-12 text-center px-4">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
-            아이에게 맞는 수업을 선택하세요
+            {courseType === 'sat'
+              ? '아이에게 맞는 수업을 선택하세요'
+              : 'AP 과목 수업권을 확인하세요'}
           </h1>
           <p className="text-sm sm:text-base text-white/60 max-w-xl mx-auto mb-6">
-            단계별로 선택하면 나에게 딱 맞는 수업권을 찾을 수 있습니다.
+            {courseType === 'sat'
+              ? '단계별로 선택하면 나에게 딱 맞는 수업권을 찾을 수 있습니다.'
+              : '과목별 전문 코치와 함께하는 일대일 AP 수업 프로그램입니다.'}
           </p>
           <ChevronDown className="w-5 h-5 text-white/30 mx-auto animate-bounce" />
         </section>
 
-        <ProgramTypeSection
-          programType={programType}
-          onSelect={handleProgramSelect}
-        />
+        {courseType === 'sat' && (
+          <>
+            <ProgramTypeSection
+              programType={programType}
+              onSelect={handleProgramSelect}
+            />
 
-        {programType === 'summer-intensive' && (
-          <SummerIntensiveSection ref={summerRef} />
+            {programType === 'summer-intensive' && (
+              <SummerIntensiveSection ref={summerRef} />
+            )}
+
+            {showRegularFlow && (
+              <ManagementTypeSection
+                ref={managementTypeRef}
+                managementType={managementType}
+                onSelect={handleManagementSelect}
+                sectionNumber={2}
+              />
+            )}
+
+            {showFormatSection && (
+              <ClassFormatSection
+                ref={formatRef}
+                classFormat={classFormat}
+                onSelect={handleFormatSelect}
+                sectionNumber={3}
+                resolvedCategoryId={resolvedCategoryId}
+                categoryData={categoryData}
+                serviceCardRef={serviceCardRef}
+              />
+            )}
+
+            {showPackageSection && resolvedCategoryId && (
+              <PackageSelectionSection
+                ref={packageRef}
+                resolvedCategoryId={resolvedCategoryId}
+                selectedOption={selectedOption}
+                onOptionSelect={handleOptionSelect}
+                onContentToggle={handleContentToggle}
+                totalPrice={totalPrice}
+                sectionNumber={4}
+              />
+            )}
+
+            {showSummarySection && resolvedCategoryId && selectedOption && managementType && (
+              <SummarySection
+                ref={summaryRef}
+                resolvedCategoryId={resolvedCategoryId}
+                categoryData={categoryData}
+                managementType={managementType}
+                classFormat={classFormat}
+                selectedOption={selectedOption}
+                totalPrice={totalPrice}
+                summary={summary}
+                isMonthly={selectedOption.type === 'content'}
+                sectionNumber={5}
+              />
+            )}
+          </>
         )}
 
-        {showRegularFlow && (
-          <ManagementTypeSection
-            ref={managementTypeRef}
-            managementType={managementType}
-            onSelect={handleManagementSelect}
-            sectionNumber={2}
-          />
-        )}
-
-        {showFormatSection && (
-          <ClassFormatSection
-            ref={formatRef}
-            classFormat={classFormat}
-            onSelect={handleFormatSelect}
-            sectionNumber={3}
-            resolvedCategoryId={resolvedCategoryId}
-            categoryData={categoryData}
-            serviceCardRef={serviceCardRef}
-          />
-        )}
-
-
-        {showPackageSection && resolvedCategoryId && (
-          <PackageSelectionSection
-            ref={packageRef}
-            resolvedCategoryId={resolvedCategoryId}
-            selectedOption={selectedOption}
-            onOptionSelect={handleOptionSelect}
-            onContentToggle={handleContentToggle}
-            totalPrice={totalPrice}
-            sectionNumber={4}
-          />
-        )}
-
-        {showSummarySection && resolvedCategoryId && selectedOption && managementType && (
-          <SummarySection
-            ref={summaryRef}
-            resolvedCategoryId={resolvedCategoryId}
-            categoryData={categoryData}
-            managementType={managementType}
-            classFormat={classFormat}
-            selectedOption={selectedOption}
-            totalPrice={totalPrice}
-            summary={summary}
-            isMonthly={isMonthly}
-            sectionNumber={5}
-          />
+        {courseType === 'ap' && (
+          <APEnrollmentSection />
         )}
       </main>
 

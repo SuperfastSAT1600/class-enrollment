@@ -13,7 +13,24 @@ import type {
   ClassFormatOption,
   OptionSelection,
   SummerIntensiveInfo,
+  APPackage,
+  APSubject,
 } from '@/types/enrollment';
+
+export const AP_PACKAGES: APPackage[] = [
+  { id: 'ap-lite', name: 'Lite', price: 1440000, subjects: 1, hours: 16 },
+  { id: 'ap-standard', name: 'Standard', price: 2720000, discountRate: 6, subjects: 2, hours: 32 },
+  { id: 'ap-booster', name: 'Booster', price: 3840000, discountRate: 12, subjects: 2, hours: 48 },
+];
+
+export const AP_SUBJECTS: APSubject[] = [
+  { name: 'Bio', coaches: 2 },
+  { name: 'Calculus', coaches: 1 },
+  { name: 'Chemistry', coaches: 2 },
+  { name: 'CS A', coaches: 1 },
+  { name: 'Stat', coaches: 1 },
+  { name: 'World History', coaches: 1 },
+];
 
 export const PROGRAM_TYPES: ProgramTypeOption[] = [
   {
