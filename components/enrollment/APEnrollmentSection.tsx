@@ -57,11 +57,8 @@ export const APEnrollmentSection = React.forwardRef<HTMLDivElement>(
                   <h4 className={`text-lg font-bold ${CARD_ACCENT[pkg.id]} mb-1`}>
                     {pkg.name}
                   </h4>
-                  <p className="text-2xl font-bold text-white mb-1">
+                  <p className="text-2xl font-bold text-white mb-4">
                     {formatPrice(pkg.price)}
-                  </p>
-                  <p className="text-xs text-white/40 mb-4">
-                    시간당 {formatPricePerHour(pkg.price, pkg.hours)}
                   </p>
                   <ul className="space-y-2 text-sm text-white/70">
                     <li className="flex items-center gap-2">
