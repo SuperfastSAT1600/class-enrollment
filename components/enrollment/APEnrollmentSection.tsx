@@ -1,4 +1,4 @@
-import { BookOpen, Users, MessageCircle, TrendingUp, Star, ShieldCheck } from 'lucide-react';
+import { BookOpen, Users, TrendingUp, Star, ShieldCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { AP_PACKAGES, AP_SUBJECTS } from '@/lib/data/pricing';
 import { APCustomHourSection } from './APCustomHourSection';
@@ -114,8 +114,7 @@ export function APEnrollmentSection() {
       {/* CTA */}
       <div className="text-center">
         <div className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-accent text-white shadow-clay-button w-full sm:w-auto min-w-[280px]">
-          <MessageCircle className="w-5 h-5" />
-          원장님과 AP 로드맵 상담하세요
+          원장님과 직접 상담하고 로드맵 만드세요.
         </div>
         <p className="mt-3 text-xs text-white/60">
           과목 선택과 맞춤 커리큘럼 상담을 받으실 수 있습니다
