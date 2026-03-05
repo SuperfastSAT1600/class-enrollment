@@ -1,6 +1,6 @@
-import { BookOpen, MessageCircle, TrendingUp, Star, ShieldCheck } from 'lucide-react';
+import { BookOpen, Users, MessageCircle, TrendingUp, Star, ShieldCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
-import { AP_PACKAGES } from '@/lib/data/pricing';
+import { AP_PACKAGES, AP_SUBJECTS } from '@/lib/data/pricing';
 import { APCustomHourSection } from './APCustomHourSection';
 
 const CARD_STYLES: Record<string, string> = {
@@ -88,6 +88,27 @@ export function APEnrollmentSection() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Subjects */}
+      <div className="mb-8">
+        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+          <Users className="w-5 h-5 text-accent-glow" />
+          진행 가능 과목
+        </h3>
+        <div className="rounded-card border border-border-strong bg-clay-solid shadow-clay overflow-hidden">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-5">
+            {AP_SUBJECTS.map((name) => (
+              <div key={name} className="flex items-center gap-2 text-sm text-white/80">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-glow" />
+                {name}
+              </div>
+            ))}
+          </div>
+        </div>
+        <p className="mt-2 text-xs text-white/50 text-center">
+          위 과목 외 추가 과목은 상담 시 문의해 주세요
+        </p>
       </div>
 
       {/* CTA */}
