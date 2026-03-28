@@ -2,12 +2,16 @@ import React from 'react';
 import { Calendar, Clock, Sparkles, Globe } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { SUMMER_INTENSIVE_DATA } from '@/lib/data/pricing';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { ICON_MAP } from './icons';
 import { ScheduleTable } from './ScheduleTable';
 
+const PHILOSOPHY_KEYS = ['conceptFirst', 'repetition', 'application'] as const;
+const WEEKLY_KEYS = ['monWed', 'thuFri'] as const;
 
 export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
   function SummerIntensiveSection(_props, ref) {
+    const { t } = useLanguage();
     const data = SUMMER_INTENSIVE_DATA;
 
     return (
@@ -17,18 +21,18 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-                여름방학 집중반
+                {t('summer.title')}
               </h2>
               <div className="flex items-center gap-3 text-sm text-white/60">
                 <span className="flex items-center gap-1.5">
                   <Calendar className="w-4 h-4" />
-                  {data.startDate} 개강
+                  {t('summer.classStart', { date: t('summer.startDate') })}
                 </span>
               </div>
             </div>
             <div className="flex flex-col items-start sm:items-end gap-1">
-              <Badge variant="warning">얼리버드 {data.earlyBird.discount}% 할인</Badge>
-              <span className="text-xs text-white/40">~{data.earlyBird.deadline}까지</span>
+              <Badge variant="warning">{t('summer.earlyBirdDiscount', { rate: data.earlyBird.discount })}</Badge>
+              <span className="text-xs text-white/40">{t('summer.earlyBirdDeadline', { deadline: data.earlyBird.deadline })}</span>
             </div>
           </div>
         </div>
@@ -37,14 +41,14 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
         <div className="mb-6">
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-accent-glow" />
-            수업 철학
+            {t('summer.philosophy.title')}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {data.philosophy.map((item) => {
-              const IconComponent = ICON_MAP[item.icon];
+            {PHILOSOPHY_KEYS.map((key, i) => {
+              const IconComponent = ICON_MAP[data.philosophy[i].icon];
               return (
                 <div
-                  key={item.title}
+                  key={key}
                   className="rounded-card border border-border-strong bg-clay-solid p-5 shadow-clay"
                 >
                   <div className="w-10 h-10 rounded-xl bg-accent-glow/15 flex items-center justify-center mb-3">
@@ -52,9 +56,9 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
                       <IconComponent className="w-5 h-5 text-accent-glow" />
                     )}
                   </div>
-                  <h4 className="font-bold text-white mb-1.5">{item.title}</h4>
+                  <h4 className="font-bold text-white mb-1.5">{t(`summer.philosophy.${key}.title`)}</h4>
                   <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
-                    {item.description}
+                    {t(`summer.philosophy.${key}.description`)}
                   </p>
                 </div>
               );
@@ -66,18 +70,18 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
         <div className="mb-6">
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
             <Calendar className="w-5 h-5 text-accent-glow" />
-            주간 구조
+            {t('summer.weeklyStructure.title')}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {data.weeklyStructure.map((block) => (
+            {WEEKLY_KEYS.map((key) => (
               <div
-                key={block.days}
+                key={key}
                 className="rounded-card border border-border-strong bg-clay-solid p-5 shadow-clay"
               >
-                <Badge variant="neutral" className="mb-3">{block.days}</Badge>
-                <h4 className="font-bold text-white text-lg mb-1.5">{block.focus}</h4>
+                <Badge variant="neutral" className="mb-3">{t(`summer.weeklyStructure.${key}.days`)}</Badge>
+                <h4 className="font-bold text-white text-lg mb-1.5">{t(`summer.weeklyStructure.${key}.focus`)}</h4>
                 <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
-                  {block.description}
+                  {t(`summer.weeklyStructure.${key}.description`)}
                 </p>
               </div>
             ))}
@@ -88,7 +92,7 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
         <div className="mb-6">
           <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
             <Clock className="w-5 h-5 text-accent-glow" />
-            일일 시간표
+            {t('summer.schedule.title')}
           </h3>
           <ScheduleTable schedule={data.schedule} />
         </div>
@@ -96,25 +100,25 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
         {/* Benefits Summary */}
         <div className="mb-6">
           <div className="rounded-card border border-border-strong bg-clay-solid p-5 sm:p-6 shadow-clay">
-            <h3 className="font-bold text-white mb-4">혜택 요약</h3>
+            <h3 className="font-bold text-white mb-4">{t('summer.benefits.title')}</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <span className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-emerald-400 text-xs">✓</span>
                 </span>
-                희망 일정에 맞춰 수업 시간 조율 가능
+                {t('summer.benefits.schedule')}
               </li>
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <span className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-emerald-400 text-xs">✓</span>
                 </span>
-                주차별 진도에 따른 맞춤 커리큘럼
+                {t('summer.benefits.curriculum')}
               </li>
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <span className="w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-amber-400 text-xs">★</span>
                 </span>
-                얼리버드 {data.earlyBird.discount}% 할인 (~{data.earlyBird.deadline})
+                {t('summer.benefits.earlyBird', { rate: data.earlyBird.discount, deadline: data.earlyBird.deadline })}
               </li>
             </ul>
           </div>
@@ -125,7 +129,7 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
           <div className="flex items-start gap-3 rounded-card border border-border-strong bg-surface-elevated px-5 py-4 shadow-clay">
             <Globe className="w-5 h-5 text-accent-glow flex-shrink-0 mt-0.5" />
             <p className="text-xs sm:text-sm text-white/50 leading-relaxed">
-              {data.timezoneNotice}
+              {t('summer.timezoneNotice')}
             </p>
           </div>
         </div>
@@ -133,10 +137,10 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
         {/* CTA */}
         <div className="text-center">
           <div className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-accent text-white shadow-clay-button w-full sm:w-auto min-w-[280px]">
-            원장님과 직접 상담하고 로드맵 설계하세요
+            {t('summer.cta.button')}
           </div>
           <p className="mt-3 text-xs text-white/40">
-            프로그램 상세 안내와 맞춤 상담을 받으실 수 있습니다
+            {t('summer.cta.description')}
           </p>
         </div>
       </section>

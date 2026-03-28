@@ -1,6 +1,8 @@
 import { BookOpen, Users, TrendingUp, Star, ShieldCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { AP_PACKAGES, AP_SUBJECTS } from '@/lib/data/pricing';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { formatWon } from '@/lib/utils/format';
 import { APCustomHourSection } from './APCustomHourSection';
 
 const CARD_STYLES: Record<string, string> = {
@@ -15,30 +17,25 @@ const CARD_ACCENT: Record<string, string> = {
   'ap-booster': 'text-indigo-300',
 };
 
-const SALES_BADGE: Record<string, { text: string; variant: 'warning' | 'success' | 'primary' }> = {
-  entry: { text: '입문 추천', variant: 'primary' },
-  popular: { text: '가장 인기', variant: 'warning' },
-  bestValue: { text: '시간당 최저가', variant: 'success' },
+const SALES_BADGE: Record<string, { textKey: string; variant: 'warning' | 'success' | 'primary' }> = {
+  entry: { textKey: 'salesLabels.entry', variant: 'primary' },
+  popular: { textKey: 'salesLabels.popular', variant: 'warning' },
+  bestValue: { textKey: 'salesLabels.bestValue', variant: 'success' },
 };
 
-function formatPrice(price: number): string {
-  return `${(price / 10000).toLocaleString()}만원`;
-}
-
-const VALUE_PROPS = [
-  { icon: Star, title: '과목별 전문 코치', desc: 'AP 전문 코치가 직접 수업합니다.' },
-  { icon: ShieldCheck, title: '맞춤 커리큘럼', desc: '학생의 현재 수준과 목표 점수에 맞춰 설계합니다' },
-  { icon: TrendingUp, title: '성과형 관리', desc: '진도 체크와 과제 피드백으로 학습 효율을 높입니다' },
-];
+const VALUE_PROP_KEYS = ['expertCoach', 'customCurriculum', 'performanceMgmt'] as const;
+const VALUE_PROP_ICONS = [Star, ShieldCheck, TrendingUp] as const;
 
 export function APEnrollmentSection() {
+  const { t, locale } = useLanguage();
+
   return (
     <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-10 sm:pb-16 animate-fade-in scroll-mt-20">
       {/* Package Cards */}
       <div className="mb-8">
         <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
           <BookOpen className="w-5 h-5 text-accent-glow" />
-          AP 수업권 패키지
+          {t('ap.packageTitle')}
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {AP_PACKAGES.map((pkg) => {
@@ -49,18 +46,18 @@ export function APEnrollmentSection() {
                 className={`rounded-card border bg-clay-solid ${CARD_STYLES[pkg.id]} p-5 shadow-clay relative`}
               >
                 <div className="h-5 mb-2">
-                  {badge && <Badge variant={badge.variant}>{badge.text}</Badge>}
+                  {badge && <Badge variant={badge.variant}>{t(badge.textKey)}</Badge>}
                 </div>
                 <h4 className={`text-lg font-bold ${CARD_ACCENT[pkg.id]} mb-1`}>
                   {pkg.name}
                 </h4>
                 <p className="text-2xl font-bold text-white flex items-baseline gap-2">
-                  {formatPrice(pkg.price)}
-                  <span className="text-sm font-medium text-white/60 tracking-wide">({pkg.hours}시간)</span>
+                  {formatWon(pkg.price, locale)}
+                  <span className="text-sm font-medium text-white/60 tracking-wide">({pkg.hours}{t('common.hours')})</span>
                 </p>
                 {pkg.discountRate && (
                   <p className="mt-3 text-sm font-bold text-rose-400">
-                    -{pkg.discountRate}% 할인 적용가
+                    {t('common.discountApplied', { rate: pkg.discountRate })}
                   </p>
                 )}
               </div>
@@ -75,18 +72,21 @@ export function APEnrollmentSection() {
       {/* Why AP with Us */}
       <div className="mb-8">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {VALUE_PROPS.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-card border border-border-strong bg-clay-solid p-4 shadow-clay"
-            >
-              <div className="w-8 h-8 rounded-lg bg-accent-glow/15 flex items-center justify-center mb-2.5">
-                <item.icon className="w-4 h-4 text-accent-glow" />
+          {VALUE_PROP_KEYS.map((key, i) => {
+            const Icon = VALUE_PROP_ICONS[i];
+            return (
+              <div
+                key={key}
+                className="rounded-card border border-border-strong bg-clay-solid p-4 shadow-clay"
+              >
+                <div className="w-8 h-8 rounded-lg bg-accent-glow/15 flex items-center justify-center mb-2.5">
+                  <Icon className="w-4 h-4 text-accent-glow" />
+                </div>
+                <h4 className="font-semibold text-white text-sm mb-1">{t(`ap.valueProps.${key}.title`)}</h4>
+                <p className="text-xs text-white/70 leading-relaxed">{t(`ap.valueProps.${key}.description`)}</p>
               </div>
-              <h4 className="font-semibold text-white text-sm mb-1">{item.title}</h4>
-              <p className="text-xs text-white/70 leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -94,7 +94,7 @@ export function APEnrollmentSection() {
       <div className="mb-8">
         <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
           <Users className="w-5 h-5 text-accent-glow" />
-          진행 가능 과목
+          {t('ap.subjectsTitle')}
         </h3>
         <div className="rounded-card border border-border-strong bg-clay-solid shadow-clay overflow-hidden">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-5">
@@ -107,17 +107,17 @@ export function APEnrollmentSection() {
           </div>
         </div>
         <p className="mt-2 text-xs text-white/50 text-center">
-          위 과목 외 추가 과목은 상담 시 문의해 주세요
+          {t('ap.subjectsNote')}
         </p>
       </div>
 
       {/* CTA */}
       <div className="text-center">
         <div className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-accent text-white shadow-clay-button w-full sm:w-auto min-w-[280px]">
-          원장님과 직접 상담하고 로드맵 만드세요.
+          {t('ap.cta.button')}
         </div>
         <p className="mt-3 text-xs text-white/60">
-          과목 선택과 맞춤 커리큘럼 상담을 받으실 수 있습니다
+          {t('ap.cta.description')}
         </p>
       </div>
     </section>

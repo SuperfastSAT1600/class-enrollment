@@ -3,19 +3,20 @@ import { Check, X } from 'lucide-react';
 import { RadioCard } from '@/components/ui/RadioCard';
 import { Badge } from '@/components/ui/Badge';
 import { MANAGEMENT_TYPES, MANAGEMENT_SERVICES } from '@/lib/data/pricing';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { ICON_MAP } from './icons';
 import { SectionHeader } from './SectionHeader';
 import type { ManagementType } from '@/types/enrollment';
 
 const MANAGED_SERVICE_LIST = MANAGEMENT_SERVICES['one-on-one'];
 const UNMANAGED_SET = new Set(
-  MANAGEMENT_SERVICES['unmanaged'].filter((s) => s.included).map((s) => s.name)
+  MANAGEMENT_SERVICES['unmanaged'].filter((s) => s.included).map((s) => s.key)
 );
 
 const COMPARISON_DATA = MANAGED_SERVICE_LIST.map((s) => ({
-  name: s.name,
+  key: s.key,
   managed: s.included,
-  unmanaged: UNMANAGED_SET.has(s.name),
+  unmanaged: UNMANAGED_SET.has(s.key),
 }));
 
 function StatusIcon({ included }: { included: boolean }) {
@@ -38,9 +39,11 @@ interface ManagementTypeSectionProps {
 
 export const ManagementTypeSection = React.forwardRef<HTMLDivElement, ManagementTypeSectionProps>(
   function ManagementTypeSection({ managementType, onSelect, sectionNumber }, ref) {
+    const { t } = useLanguage();
+
     return (
       <section ref={ref} className="max-w-3xl mx-auto px-4 sm:px-6 pb-10 sm:pb-16 animate-fade-in scroll-mt-20">
-        <SectionHeader number={sectionNumber} title="관리 여부 선택" />
+        <SectionHeader number={sectionNumber} title={t('managementType.sectionTitle')} />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {MANAGEMENT_TYPES.map((mt) => {
             const IconComponent = ICON_MAP[mt.icon];
@@ -58,18 +61,18 @@ export const ManagementTypeSection = React.forwardRef<HTMLDivElement, Management
                         <IconComponent className="w-5 h-5 text-accent-glow" />
                       )}
                     </div>
-                    {mt.recommended && <Badge variant="primary">추천</Badge>}
+                    {mt.recommended && <Badge variant="primary">{t('common.recommended')}</Badge>}
                   </div>
                   <div>
-                    <h3 className="font-bold text-white text-lg">{mt.name}</h3>
-                    <Badge variant="neutral" className="mt-1">{mt.subtitle}</Badge>
+                    <h3 className="font-bold text-white text-lg">{t(`managementType.${mt.id}.name`)}</h3>
+                    <Badge variant="neutral" className="mt-1">{t(`managementType.${mt.id}.subtitle`)}</Badge>
                   </div>
                   <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
-                    {mt.description}
+                    {t(`managementType.${mt.id}.description`)}
                   </p>
                   {mt.socialProof && (
                     <p className="text-xs sm:text-sm font-medium text-accent-glow">
-                      {mt.socialProof}
+                      {t(`managementType.${mt.id}.socialProof`)}
                     </p>
                   )}
                   <div
@@ -79,7 +82,7 @@ export const ManagementTypeSection = React.forwardRef<HTMLDivElement, Management
                         : 'bg-white/5 text-white/50 border-white/5'
                     }`}
                   >
-                    {mt.serviceHighlight}
+                    {t(`managementType.${mt.id}.serviceHighlight`)}
                   </div>
                 </div>
               </RadioCard>
@@ -91,18 +94,18 @@ export const ManagementTypeSection = React.forwardRef<HTMLDivElement, Management
           <div className="mt-6 animate-fade-in">
             <div className="bg-surface-elevated rounded-card border border-border-strong shadow-clay overflow-hidden">
               <div className="grid grid-cols-[1fr_80px_80px] sm:grid-cols-[1fr_120px_120px] bg-white/5 border-b border-white/5">
-                <div className="px-4 sm:px-5 py-3 text-xs sm:text-sm font-bold text-white/50">서비스</div>
-                <div className="px-2 py-3 text-xs sm:text-sm font-bold text-center text-emerald-300">관리형</div>
-                <div className="px-2 py-3 text-xs sm:text-sm font-bold text-center text-white/50">비관리형</div>
+                <div className="px-4 sm:px-5 py-3 text-xs sm:text-sm font-bold text-white/50">{t('managementType.tableHeader.service')}</div>
+                <div className="px-2 py-3 text-xs sm:text-sm font-bold text-center text-emerald-300">{t('managementType.tableHeader.managed')}</div>
+                <div className="px-2 py-3 text-xs sm:text-sm font-bold text-center text-white/50">{t('managementType.tableHeader.unmanaged')}</div>
               </div>
               {COMPARISON_DATA.map((row, i) => (
                 <div
-                  key={row.name}
+                  key={row.key}
                   className={`grid grid-cols-[1fr_80px_80px] sm:grid-cols-[1fr_120px_120px] items-center ${
                     i < COMPARISON_DATA.length - 1 ? 'border-b border-white/5' : ''
                   }`}
                 >
-                  <div className="px-4 sm:px-5 py-3 text-xs sm:text-sm text-white/80">{row.name}</div>
+                  <div className="px-4 sm:px-5 py-3 text-xs sm:text-sm text-white/80">{t(`services.${row.key}`)}</div>
                   <div className="flex justify-center py-3"><StatusIcon included={row.managed} /></div>
                   <div className="flex justify-center py-3"><StatusIcon included={row.unmanaged} /></div>
                 </div>

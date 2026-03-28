@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useMemo } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import {
   CATEGORIES,
   resolveCategoryId,
@@ -22,6 +23,7 @@ import { useScrollBehavior } from '@/hooks/useScrollBehavior';
 import type { CourseType, ProgramType, ManagementType, ClassFormat, OptionSelection } from '@/types/enrollment';
 
 export function EnrollmentPage() {
+  const { t } = useLanguage();
   const [courseType, setCourseType] = useState<CourseType>('sat');
   const [programType, setProgramType] = useState<ProgramType | null>(null);
   const [managementType, setManagementType] = useState<ManagementType | null>(null);
@@ -53,8 +55,8 @@ export function EnrollmentPage() {
   );
 
   const summary = useMemo(
-    () => (resolvedCategoryId && selectedOption ? getSelectedOptionSummary(resolvedCategoryId, selectedOption) : ''),
-    [resolvedCategoryId, selectedOption]
+    () => (resolvedCategoryId && selectedOption ? getSelectedOptionSummary(resolvedCategoryId, selectedOption, t) : ''),
+    [resolvedCategoryId, selectedOption, t]
   );
 
   const hasValidOption = useMemo(() => {
@@ -144,13 +146,13 @@ export function EnrollmentPage() {
         <section className="pt-12 sm:pt-20 pb-8 sm:pb-12 text-center px-4">
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
             {courseType === 'sat'
-              ? '아이에게 맞는 수업을 선택하세요'
-              : '관리형 AP의 기준'}
+              ? t('hero.sat.title')
+              : t('hero.ap.title')}
           </h1>
           <p className="text-sm sm:text-base text-white/60 max-w-xl mx-auto mb-6">
             {courseType === 'sat'
-              ? '단계별로 선택하면 나에게 딱 맞는 수업권을 찾을 수 있습니다.'
-              : '과목별 전문 코치와 함께하는 1:1수업 프로그램입니다.'}
+              ? t('hero.sat.description')
+              : t('hero.ap.description')}
           </p>
           <ChevronDown className="w-5 h-5 text-white/30 mx-auto animate-bounce" />
         </section>

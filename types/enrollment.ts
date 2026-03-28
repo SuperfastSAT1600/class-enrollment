@@ -94,6 +94,7 @@ export interface ContentItem {
 }
 
 export interface ManagementService {
+  key: string;
   name: string;
   included: boolean;
 }

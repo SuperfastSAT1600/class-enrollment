@@ -3,14 +3,11 @@
 import { useState } from 'react';
 import { Sparkles } from 'lucide-react';
 import { getAPCustomPrice, AP_PRICE_TIERS } from '@/lib/data/pricing';
-
-function formatWon(amount: number): string {
-  const man = amount / 10000;
-  if (man >= 1 && Number.isInteger(man)) return `${man.toLocaleString()}만원`;
-  return `${amount.toLocaleString()}원`;
-}
+import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { formatWon } from '@/lib/utils/format';
 
 export function APCustomHourSection() {
+  const { t, locale } = useLanguage();
   const [hours, setHours] = useState(24);
   const [inputText, setInputText] = useState('24');
   const price = getAPCustomPrice(hours);
@@ -51,10 +48,10 @@ export function APCustomHourSection() {
         <div className="px-5 pt-5 pb-4">
           <h3 className="text-base font-bold text-white flex items-center gap-2">
             <Sparkles className="w-4.5 h-4.5 text-accent-glow" />
-            원하는 시간만큼 등록하고 성과내세요.
+            {t('ap.custom.title')}
           </h3>
           <p className="text-xs text-white/60 mt-1">
-            충분한 시간을 투자할수록 확실한 성과로 돌아옵니다
+            {t('ap.custom.description')}
           </p>
         </div>
 
@@ -103,7 +100,7 @@ export function APCustomHourSection() {
                   focus:outline-none focus:border-accent-glow/50 focus:ring-1 focus:ring-accent-glow/30
                   [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
-              <span className="text-sm text-white/70">시간</span>
+              <span className="text-sm text-white/70">{t('common.hours')}</span>
             </div>
           </div>
 
@@ -130,15 +127,15 @@ export function APCustomHourSection() {
         {/* Price summary */}
         <div className="border-t border-border-strong bg-white/[0.02] px-5 py-4">
           <div className="grid grid-cols-2 gap-y-2.5 text-sm">
-            <span className="text-white/70">수업 시간</span>
-            <span className="text-right text-white font-semibold">{price.hours}시간</span>
+            <span className="text-white/70">{t('ap.custom.classHours')}</span>
+            <span className="text-right text-white font-semibold">{price.hours}{t('common.hours')}</span>
 
-            <span className="text-white/70">시간당 가격</span>
+            <span className="text-white/70">{t('ap.custom.pricePerHour')}</span>
             <span className="text-right text-white font-semibold">
-              {price.pricePerHour.toLocaleString()}원
+              {formatWon(price.pricePerHour, locale)}
             </span>
 
-            <span className="text-white/70">할인율</span>
+            <span className="text-white/70">{t('ap.custom.discountRate')}</span>
             <span className={`text-right font-semibold ${price.discountRate > 0 ? 'text-rose-400' : 'text-white/60'}`}>
               {price.discountRate > 0 ? `-${price.discountRate}%` : '—'}
             </span>
@@ -146,12 +143,12 @@ export function APCustomHourSection() {
 
           <div className="border-t border-border-strong mt-3 pt-3 flex items-end justify-between">
             <div>
-              <p className="text-xs text-white/60">총 금액</p>
-              <p className="text-xl font-bold text-white">{formatWon(price.totalPrice)}</p>
+              <p className="text-xs text-white/60">{t('ap.custom.totalAmount')}</p>
+              <p className="text-xl font-bold text-white">{formatWon(price.totalPrice, locale)}</p>
             </div>
             {price.discountAmount > 0 && (
               <p className="text-sm font-bold text-rose-400">
-                -{formatWon(price.discountAmount)} 절약
+                -{formatWon(price.discountAmount, locale)} {t('common.savings')}
               </p>
             )}
           </div>

@@ -12,6 +12,7 @@ import {
   getBasePrice,
   getSavingsAmount,
 } from '@/lib/data/pricing';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { SectionHeader } from './SectionHeader';
 import type { CategoryId, OptionSelection } from '@/types/enrollment';
 
@@ -29,12 +30,14 @@ export const PackageSelectionSection = React.forwardRef<HTMLDivElement, PackageS
     { resolvedCategoryId, selectedOption, onOptionSelect, onContentToggle, totalPrice, sectionNumber },
     ref
   ) {
+    const { t, locale } = useLanguage();
+
     const sectionTitle =
       resolvedCategoryId === 'content'
-        ? '콘텐츠 선택 (복수 선택 가능)'
+        ? t('packageSelection.content')
         : resolvedCategoryId === 'one-on-three'
-          ? '커리큘럼 선택'
-          : '시간 패키지 선택';
+          ? t('packageSelection.curriculum')
+          : t('packageSelection.hourPackage');
 
     return (
       <section
@@ -47,8 +50,7 @@ export const PackageSelectionSection = React.forwardRef<HTMLDivElement, PackageS
         {isHourPackageCategory(resolvedCategoryId) && (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {HOUR_PACKAGES[resolvedCategoryId].map((pkg) => {
-              const basePrice = getBasePrice(resolvedCategoryId);
-              const savings = getSavingsAmount(pkg, basePrice);
+              const savings = getSavingsAmount(pkg, getBasePrice(resolvedCategoryId));
               const labelInfo = pkg.salesLabel ? SALES_LABELS[pkg.salesLabel] : null;
               return (
                 <RadioCard
@@ -57,26 +59,22 @@ export const PackageSelectionSection = React.forwardRef<HTMLDivElement, PackageS
                     selectedOption?.type === 'hour-package' &&
                     selectedOption.packageId === pkg.id
                   }
-                  onSelect={() =>
-                    onOptionSelect({ type: 'hour-package', packageId: pkg.id })
-                  }
+                  onSelect={() => onOptionSelect({ type: 'hour-package', packageId: pkg.id })}
                 >
                   <div className="text-center space-y-3">
                     <div className="h-5">
                       {labelInfo && (
-                        <Badge variant={labelInfo.variant}>{labelInfo.text}</Badge>
+                        <Badge variant={labelInfo.variant}>{t(labelInfo.textKey)}</Badge>
                       )}
                     </div>
-                    <p className="text-2xl font-bold text-white">
-                      {pkg.hours}시간
-                    </p>
+                    <p className="text-2xl font-bold text-white">{pkg.hours}{t('common.hours')}</p>
                     <div>
                       <p className="text-lg font-bold text-accent-glow">
-                        {formatWon(pkg.totalPrice)}
+                        {formatWon(pkg.totalPrice, locale)}
                       </p>
                       {savings > 0 && pkg.discountRate && (
                         <p className="text-sm sm:text-base font-bold text-rose-400 mt-1">
-                          {formatWon(savings)} 절약 -{pkg.discountRate}%
+                          {t('common.savingsAmount', { amount: formatWon(savings, locale), rate: pkg.discountRate })}
                         </p>
                       )}
                     </div>
@@ -104,13 +102,13 @@ export const PackageSelectionSection = React.forwardRef<HTMLDivElement, PackageS
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <h4 className="font-bold text-white text-lg">
-                      {cur.name}
+                      {t(`curriculum.${cur.id}.name`)}
                     </h4>
-                    <Badge variant="neutral">{cur.hours}시간</Badge>
+                    <Badge variant="neutral">{cur.hours}{t('common.hours')}</Badge>
                   </div>
-                  <p className="text-xs sm:text-sm text-white/60">{cur.description}</p>
+                  <p className="text-xs sm:text-sm text-white/60">{t(`curriculum.${cur.id}.description`)}</p>
                   <p className="text-lg font-bold text-accent-glow">
-                    {formatWon(cur.totalPrice)}
+                    {formatWon(cur.totalPrice, locale)}
                   </p>
                 </div>
               </RadioCard>
@@ -133,12 +131,12 @@ export const PackageSelectionSection = React.forwardRef<HTMLDivElement, PackageS
                     onToggle={() => onContentToggle(item.id)}
                   >
                     <div className="space-y-2 pr-6">
-                      <h4 className="font-bold text-white">{item.name}</h4>
+                      <h4 className="font-bold text-white">{t(`contentItems.${item.id}.name`)}</h4>
                       <p className="text-xs text-white/40">
-                        {item.description}
+                        {t(`contentItems.${item.id}.description`)}
                       </p>
                       <p className="text-base font-bold text-accent-glow">
-                        월 {formatWon(item.monthlyPrice)}
+                        {t('packageSelection.monthlyPrefix')} {formatWon(item.monthlyPrice, locale)}
                       </p>
                     </div>
                   </CheckboxCard>
@@ -148,9 +146,9 @@ export const PackageSelectionSection = React.forwardRef<HTMLDivElement, PackageS
             {selectedOption?.type === 'content' &&
               selectedOption.contentIds.length > 0 && (
                 <div className="mt-4 p-4 bg-accent-glow/10 rounded-card text-center border border-accent-glow/20">
-                  <p className="text-xs sm:text-sm text-white/60">합산 월 가격</p>
+                  <p className="text-xs sm:text-sm text-white/60">{t('packageSelection.totalMonthlyPrice')}</p>
                   <p className="text-2xl font-bold text-white">
-                    월 {formatWon(totalPrice)}
+                    {t('packageSelection.monthlyPrefix')} {formatWon(totalPrice, locale)}
                   </p>
                 </div>
               )}

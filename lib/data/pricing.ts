@@ -269,35 +269,35 @@ export const CONTENT_ITEMS: ContentItem[] = [
 
 export const MANAGEMENT_SERVICES: Record<CategoryId, ManagementService[]> = {
   'one-on-one': [
-    { name: '레슨 피드백', included: true },
-    { name: '기출문제 제공', included: true },
-    { name: '데일리 Vocab', included: true },
-    { name: '오답노트', included: true },
-    { name: '숙제 일정 관리', included: true },
-    { name: '2주 간격 모의시험', included: true },
+    { key: 'lessonFeedback', name: '레슨 피드백', included: true },
+    { key: 'pastExams', name: '기출문제 제공', included: true },
+    { key: 'dailyVocab', name: '데일리 Vocab', included: true },
+    { key: 'wrongAnswerNote', name: '오답노트', included: true },
+    { key: 'homeworkSchedule', name: '숙제 일정 관리', included: true },
+    { key: 'biweeklyMock', name: '2주 간격 모의시험', included: true },
   ],
   'one-on-three': [
-    { name: '레슨 피드백', included: true },
-    { name: '기출문제 제공', included: true },
-    { name: '데일리 Vocab', included: true },
-    { name: '오답노트', included: true },
-    { name: '숙제 일정 관리', included: true },
-    { name: '2주 간격 모의시험', included: true },
+    { key: 'lessonFeedback', name: '레슨 피드백', included: true },
+    { key: 'pastExams', name: '기출문제 제공', included: true },
+    { key: 'dailyVocab', name: '데일리 Vocab', included: true },
+    { key: 'wrongAnswerNote', name: '오답노트', included: true },
+    { key: 'homeworkSchedule', name: '숙제 일정 관리', included: true },
+    { key: 'biweeklyMock', name: '2주 간격 모의시험', included: true },
   ],
   content: [
-    { name: '학습 결과 피드백', included: true },
-    { name: '오답노트', included: true },
-    { name: '숙제 일정 관리', included: true },
-    { name: '레슨 피드백', included: false },
-    { name: '2주 간격 모의시험', included: false },
+    { key: 'learningFeedback', name: '학습 결과 피드백', included: true },
+    { key: 'wrongAnswerNote', name: '오답노트', included: true },
+    { key: 'homeworkSchedule', name: '숙제 일정 관리', included: true },
+    { key: 'lessonFeedback', name: '레슨 피드백', included: false },
+    { key: 'biweeklyMock', name: '2주 간격 모의시험', included: false },
   ],
   unmanaged: [
-    { name: '레슨 피드백', included: true },
-    { name: '인강', included: false },
-    { name: '단어 학습', included: false },
-    { name: '오답노트', included: false },
-    { name: '숙제 일정 관리', included: false },
-    { name: '2주 간격 모의시험', included: false },
+    { key: 'lessonFeedback', name: '레슨 피드백', included: true },
+    { key: 'lectures', name: '인강', included: false },
+    { key: 'vocabLearning', name: '단어 학습', included: false },
+    { key: 'wrongAnswerNote', name: '오답노트', included: false },
+    { key: 'homeworkSchedule', name: '숙제 일정 관리', included: false },
+    { key: 'biweeklyMock', name: '2주 간격 모의시험', included: false },
   ],
 };
 
@@ -347,35 +347,52 @@ export function getSavingsAmount(pkg: HourPackage, basePrice: number): number {
   return (basePrice * pkg.hours) - pkg.totalPrice;
 }
 
-export const SALES_LABELS: Record<string, { text: string; variant: 'warning' | 'success' }> = {
-  popular: { text: '가장 인기', variant: 'warning' },
-  bestValue: { text: '최대 할인', variant: 'success' },
+export const SALES_LABELS: Record<string, { textKey: string; variant: 'warning' | 'success' }> = {
+  popular: { textKey: 'salesLabels.popular', variant: 'warning' },
+  bestValue: { textKey: 'salesLabels.bestValue', variant: 'success' },
 };
+
+type TFn = (key: string, params?: Record<string, string | number>) => string;
 
 export function getSelectedOptionSummary(
   categoryId: CategoryId,
-  option: OptionSelection
+  option: OptionSelection,
+  t?: TFn
 ): string {
   const category = CATEGORIES.find((c) => c.id === categoryId);
   if (!category) return '';
 
+  const categoryName = t ? t(`classFormat.${categoryId}.name`) || t(`category.${categoryId}.name`) || category.name : category.name;
+
   if (option.type === 'hour-package') {
     if (!isHourPackageCategory(categoryId)) return '';
     const pkg = HOUR_PACKAGES[categoryId].find((p) => p.id === option.packageId);
-    return pkg ? `${category.name} ${pkg.hours}시간` : '';
+    if (!pkg) return '';
+    return t
+      ? t('summary.summaryHourPackage', { category: categoryName, hours: pkg.hours })
+      : `${category.name} ${pkg.hours}시간`;
   }
 
   if (option.type === 'curriculum') {
     const cur = CURRICULUM_OPTIONS.find((c) => c.id === option.curriculumId);
-    return cur ? `${category.name} - ${cur.name} ${cur.hours}시간` : '';
+    if (!cur) return '';
+    const curName = t ? t(`curriculum.${cur.id}.name`) : cur.name;
+    return t
+      ? t('summary.summaryCurriculum', { category: categoryName, name: curName, hours: cur.hours })
+      : `${category.name} - ${cur.name} ${cur.hours}시간`;
   }
 
   if (option.type === 'content') {
     if (option.contentIds.length === 0) return '';
     const names = option.contentIds
-      .map((id) => CONTENT_ITEMS.find((c) => c.id === id)?.name)
+      .map((id) => {
+        const item = CONTENT_ITEMS.find((c) => c.id === id);
+        return item ? (t ? t(`contentItems.${item.id}.name`) : item.name) : null;
+      })
       .filter(Boolean);
-    return `콘텐츠 - ${names.join(', ')}`;
+    return t
+      ? t('summary.summaryContent', { names: names.join(', ') })
+      : `콘텐츠 - ${names.join(', ')}`;
   }
 
   return '';

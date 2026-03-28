@@ -2,6 +2,7 @@ import React from 'react';
 import { RadioCard } from '@/components/ui/RadioCard';
 import { Badge } from '@/components/ui/Badge';
 import { CLASS_FORMATS, MANAGEMENT_SERVICES } from '@/lib/data/pricing';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { ICON_MAP } from './icons';
 import { SectionHeader } from './SectionHeader';
 import { ServiceCard } from './ServiceCard';
@@ -18,6 +19,7 @@ interface ClassFormatSectionProps {
 
 export const ClassFormatSection = React.forwardRef<HTMLDivElement, ClassFormatSectionProps>(
   function ClassFormatSection({ classFormat, onSelect, sectionNumber, resolvedCategoryId, categoryData, serviceCardRef }, ref) {
+    const { t } = useLanguage();
     const services = resolvedCategoryId ? MANAGEMENT_SERVICES[resolvedCategoryId] : null;
 
     return (
@@ -25,7 +27,7 @@ export const ClassFormatSection = React.forwardRef<HTMLDivElement, ClassFormatSe
         ref={ref}
         className="max-w-3xl mx-auto px-4 sm:px-6 pb-10 sm:pb-16 animate-fade-in scroll-mt-20"
       >
-        <SectionHeader number={sectionNumber} title="수업 형태 선택" />
+        <SectionHeader number={sectionNumber} title={t('classFormat.sectionTitle')} />
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {CLASS_FORMATS.map((cf) => {
             const IconComponent = ICON_MAP[cf.icon];
@@ -44,12 +46,12 @@ export const ClassFormatSection = React.forwardRef<HTMLDivElement, ClassFormatSe
                         )}
                       </div>
                       {cf.recommended && (
-                        <Badge variant="primary">추천</Badge>
+                        <Badge variant="primary">{t('common.recommended')}</Badge>
                       )}
                     </div>
-                    <h3 className="font-bold text-white text-lg">{cf.name}</h3>
+                    <h3 className="font-bold text-white text-lg">{t(`classFormat.${cf.id}.name`)}</h3>
                     <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
-                      {cf.description}
+                      {t(`classFormat.${cf.id}.description`)}
                     </p>
                   </div>
                 </RadioCard>
@@ -57,8 +59,8 @@ export const ClassFormatSection = React.forwardRef<HTMLDivElement, ClassFormatSe
                 {isSelected && services && categoryData && (
                   <div ref={serviceCardRef} className="sm:hidden animate-fade-in">
                     <ServiceCard
-                      categoryName={categoryData.name}
-                      managementLevel={categoryData.managementLevel}
+                      categoryName={t(`classFormat.${resolvedCategoryId}.name`)}
+                      managementLevel={t(`category.${resolvedCategoryId}.managementLevel`)}
                       services={services}
                     />
                   </div>
@@ -72,8 +74,8 @@ export const ClassFormatSection = React.forwardRef<HTMLDivElement, ClassFormatSe
         {classFormat && services && categoryData && (
           <div className="hidden sm:block mt-6 animate-fade-in">
             <ServiceCard
-              categoryName={categoryData.name}
-              managementLevel={categoryData.managementLevel}
+              categoryName={t(`classFormat.${resolvedCategoryId}.name`)}
+              managementLevel={t(`category.${resolvedCategoryId}.managementLevel`)}
               services={services}
             />
           </div>

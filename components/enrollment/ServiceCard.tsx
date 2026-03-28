@@ -1,4 +1,5 @@
 import { Badge } from '@/components/ui/Badge';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { ServiceIndicator } from './ServiceIndicator';
 import type { ManagementService } from '@/types/enrollment';
 
@@ -9,6 +10,7 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ categoryName, managementLevel, services }: ServiceCardProps) {
+  const { t } = useLanguage();
   const included = services.filter((s) => s.included);
   const excluded = services.filter((s) => !s.included);
 
@@ -18,7 +20,7 @@ export function ServiceCard({ categoryName, managementLevel, services }: Service
         <div>
           <p className="text-emerald-400/70 text-xs sm:text-sm">{categoryName}</p>
           <p className="text-emerald-300 font-bold text-base sm:text-lg">
-            {included.length}개 서비스 포함
+            {t('serviceCard.servicesIncluded', { count: included.length })}
           </p>
         </div>
         <Badge variant="neutral">{managementLevel}</Badge>
@@ -28,8 +30,8 @@ export function ServiceCard({ categoryName, managementLevel, services }: Service
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 mb-2">
           {included.map((service) => (
             <ServiceIndicator
-              key={service.name}
-              name={service.name}
+              key={service.key}
+              name={t(`services.${service.key}`)}
               included
               variant="card"
             />
@@ -38,12 +40,12 @@ export function ServiceCard({ categoryName, managementLevel, services }: Service
 
         {excluded.length > 0 && (
           <div className="mt-4 pt-4 border-t border-white/5">
-            <p className="text-xs text-white/40 mb-2">미포함</p>
+            <p className="text-xs text-white/40 mb-2">{t('serviceCard.notIncluded')}</p>
             <div className="flex flex-wrap gap-2">
               {excluded.map((service) => (
                 <ServiceIndicator
-                  key={service.name}
-                  name={service.name}
+                  key={service.key}
+                  name={t(`services.${service.key}`)}
                   included={false}
                   variant="pill"
                 />

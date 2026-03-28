@@ -2,6 +2,7 @@ import { RadioCard } from '@/components/ui/RadioCard';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { PROGRAM_TYPES } from '@/lib/data/pricing';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { ICON_MAP } from './icons';
 import { SectionHeader } from './SectionHeader';
 import type { ProgramType } from '@/types/enrollment';
@@ -12,13 +13,17 @@ interface ProgramTypeSectionProps {
 }
 
 export function ProgramTypeSection({ programType, onSelect }: ProgramTypeSectionProps) {
+  const { t } = useLanguage();
+
   return (
     <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-10 sm:pb-16">
-      <SectionHeader number={1} title="프로그램 선택" />
+      <SectionHeader number={1} title={t('programType.sectionTitle')} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {PROGRAM_TYPES.map((pt) => {
           const IconComponent = ICON_MAP[pt.icon];
           const isDisabled = !!pt.disabled;
+          const badge = t(`programType.${pt.id}.badge`);
+          const hasBadge = badge !== `programType.${pt.id}.badge`;
 
           const cardContent = (
             <div className="flex flex-col gap-3">
@@ -29,24 +34,24 @@ export function ProgramTypeSection({ programType, onSelect }: ProgramTypeSection
                   )}
                 </div>
                 <div className="flex gap-2">
-                  {pt.badge && (
-                    <Badge variant="warning">{pt.badge}</Badge>
+                  {hasBadge && (
+                    <Badge variant="warning">{badge}</Badge>
                   )}
                   {pt.recommended && (
-                    <Badge variant="primary">추천</Badge>
+                    <Badge variant="primary">{t('common.recommended')}</Badge>
                   )}
                 </div>
               </div>
               <div>
                 <h3 className="font-bold text-white text-lg">
-                  {pt.name}
+                  {t(`programType.${pt.id}.name`)}
                 </h3>
                 <Badge variant="neutral" className="mt-1">
-                  {pt.subtitle}
+                  {t(`programType.${pt.id}.subtitle`)}
                 </Badge>
               </div>
               <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
-                {pt.description}
+                {t(`programType.${pt.id}.description`)}
               </p>
             </div>
           );
