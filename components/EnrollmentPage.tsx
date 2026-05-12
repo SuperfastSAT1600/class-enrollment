@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -31,6 +32,8 @@ export function EnrollmentPage() {
   const [classFormat, setClassFormat] = useState<ClassFormat | null>(null);
   const [selectedOption, setSelectedOption] = useState<OptionSelection | null>(null);
 
+  const searchParams = useSearchParams();
+
   const summerRef = useRef<HTMLDivElement>(null);
   const superTestRef = useRef<HTMLDivElement>(null);
   const managementTypeRef = useRef<HTMLDivElement>(null);
@@ -40,6 +43,17 @@ export function EnrollmentPage() {
   const serviceCardRef = useRef<HTMLDivElement>(null);
 
   const { scrollTo, autoScrollTimerRef } = useScrollBehavior();
+
+  useEffect(() => {
+    const program = searchParams.get('program');
+    if (program === 'super-test' || program === 'summer-intensive' || program === 'regular') {
+      setProgramType(program);
+      setTimeout(() => {
+        const targetRef = program === 'regular' ? managementTypeRef : program === 'summer-intensive' ? summerRef : superTestRef;
+        scrollTo(targetRef, 'top', 250);
+      }, 100);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const resolvedCategoryId = useMemo(
     () => (managementType ? resolveCategoryId(managementType, classFormat) : null),
