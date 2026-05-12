@@ -299,7 +299,9 @@
     },
     "cta": {
       "button": "Pay for Super Test",
-      "description": "You will be redirected to the Toss Payments page"
+      "description": "You will be redirected to the Toss Payments page",
+      "kakao": "Submit Info via KakaoTalk",
+      "kakaoGuide": "After payment, please leave your name / grade / preferred schedule / previous SAT score in the KakaoTalk open chat"
     }
   },
   "ap": {

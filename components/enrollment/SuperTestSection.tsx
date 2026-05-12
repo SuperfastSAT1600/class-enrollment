@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Clock, FileText, Target, CheckCircle, Users } from 'lucide-react';
+import { Calendar, Clock, FileText, Target, CheckCircle, Users, MessageCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 
@@ -135,7 +135,7 @@ export const SuperTestSection = React.forwardRef<HTMLDivElement>(
         </div>
 
         {/* CTA */}
-        <div className="text-center">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
             href="https://s.tosspayments.com/BnhxdHk8xF4"
             target="_blank"
@@ -144,10 +144,19 @@ export const SuperTestSection = React.forwardRef<HTMLDivElement>(
           >
             {t('superTest.cta.button')}
           </a>
-          <p className="mt-3 text-xs text-white/40">
-            {t('superTest.cta.description')}
-          </p>
+          <a
+            href="https://open.kakao.com/o/sxHGVZ4h"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-[#FEE500] text-[#191919] shadow-clay-button w-full sm:w-auto min-w-[280px]"
+          >
+            <MessageCircle className="w-5 h-5" />
+            {t('superTest.cta.kakao')}
+          </a>
         </div>
+        <p className="mt-3 text-xs text-white/40 text-center">
+          {t('superTest.cta.kakaoGuide')}
+        </p>
       </section>
     );
   }
