@@ -17,6 +17,7 @@ import { ClassFormatSection } from './enrollment/ClassFormatSection';
 import { PackageSelectionSection } from './enrollment/PackageSelectionSection';
 import { SummarySection } from './enrollment/SummarySection';
 import { SummerIntensiveSection } from './enrollment/SummerIntensiveSection';
+import { SuperTestSection } from './enrollment/SuperTestSection';
 import { CourseTypeToggle } from './enrollment/CourseTypeToggle';
 import { APEnrollmentSection } from './enrollment/APEnrollmentSection';
 import { useScrollBehavior } from '@/hooks/useScrollBehavior';
@@ -31,6 +32,7 @@ export function EnrollmentPage() {
   const [selectedOption, setSelectedOption] = useState<OptionSelection | null>(null);
 
   const summerRef = useRef<HTMLDivElement>(null);
+  const superTestRef = useRef<HTMLDivElement>(null);
   const managementTypeRef = useRef<HTMLDivElement>(null);
   const formatRef = useRef<HTMLDivElement>(null);
   const packageRef = useRef<HTMLDivElement>(null);
@@ -85,7 +87,8 @@ export function EnrollmentPage() {
       setSelectedOption(null);
     }
 
-    scrollTo(type === 'regular' ? managementTypeRef : summerRef, 'top', 250);
+    const targetRef = type === 'regular' ? managementTypeRef : type === 'summer-intensive' ? summerRef : superTestRef;
+    scrollTo(targetRef, 'top', 250);
   }, [programType, scrollTo]);
 
   const handleManagementSelect = useCallback((type: ManagementType) => {
@@ -166,6 +169,10 @@ export function EnrollmentPage() {
 
             {programType === 'summer-intensive' && (
               <SummerIntensiveSection ref={summerRef} />
+            )}
+
+            {programType === 'super-test' && (
+              <SuperTestSection ref={superTestRef} />
             )}
 
             {showRegularFlow && (

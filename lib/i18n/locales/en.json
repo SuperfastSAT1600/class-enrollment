@@ -36,6 +36,11 @@
       "name": "Summer Intensive",
       "subtitle": "Short-term Intensive",
       "description": "A special program to boost your skills intensively during summer break"
+    },
+    "super-test": {
+      "name": "Super Test",
+      "subtitle": "Practice Mock Test",
+      "description": "Check your skills with a real SAT mock test every Saturday"
     }
   },
   "managementType": {
@@ -244,6 +249,57 @@
     "cta": {
       "button": "Schedule a Consultation for Your Roadmap",
       "description": "Get detailed program information and personalized consultation"
+    }
+  },
+  "superTest": {
+    "title": "Super Test",
+    "subtitle": "Every Saturday",
+    "price": "$45",
+    "priceLabel": "per session",
+    "overview": {
+      "title": "Overview",
+      "realExam": {
+        "title": "Real Exam Environment",
+        "description": "Build test-day confidence in an environment 100% identical to the Digital SAT."
+      },
+      "diagnosis": {
+        "title": "Precision Diagnosis",
+        "description": "Identify exact weaknesses through domain and skill-level analysis."
+      },
+      "roadmap": {
+        "title": "Custom Roadmap",
+        "description": "Get a personalized study roadmap based on your diagnostic results."
+      }
+    },
+    "examStructure": {
+      "title": "Exam Structure",
+      "rw": "Reading & Writing",
+      "rwTime": "64 min",
+      "math": "Math",
+      "mathTime": "70 min",
+      "note": "Conducted in an environment 100% identical to the Digital SAT."
+    },
+    "report": {
+      "title": "Diagnostic Report",
+      "domain": "Domain-Level Analysis",
+      "domainDesc": "Accurate scores and achievement analysis for each Reading & Writing and Math domain.",
+      "skill": "Skill-Level Analysis",
+      "skillDesc": "Identify strengths and weaknesses by detailed skills to guide efficient study.",
+      "weakness": "Weakness Identification",
+      "weaknessDesc": "Precisely analyze recurring mistake patterns to provide focused study points."
+    },
+    "recommendation": {
+      "title": "Recommended For",
+      "items": [
+        "Students who want to accurately assess their current level",
+        "Students who want to adapt to the real exam environment in advance",
+        "Students who want to find weak areas and study efficiently",
+        "Students who want to track their progress regularly"
+      ]
+    },
+    "cta": {
+      "button": "Pay for Super Test",
+      "description": "You will be redirected to the Toss Payments page"
     }
   },
   "ap": {

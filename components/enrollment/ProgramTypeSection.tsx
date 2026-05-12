@@ -18,7 +18,7 @@ export function ProgramTypeSection({ programType, onSelect }: ProgramTypeSection
   return (
     <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-10 sm:pb-16">
       <SectionHeader number={1} title={t('programType.sectionTitle')} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {PROGRAM_TYPES.map((pt) => {
           const IconComponent = ICON_MAP[pt.icon];
           const isDisabled = !!pt.disabled;

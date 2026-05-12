@@ -1,6 +1,6 @@
 export type CourseType = 'sat' | 'ap';
 
-export type ProgramType = 'regular' | 'summer-intensive';
+export type ProgramType = 'regular' | 'summer-intensive' | 'super-test';
 
 export interface APPackage {
   id: string;
