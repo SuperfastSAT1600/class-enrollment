@@ -154,9 +154,11 @@ export const SuperTestSection = React.forwardRef<HTMLDivElement>(
             {t('superTest.cta.kakao')}
           </a>
         </div>
-        <p className="mt-3 text-xs text-white/40 text-center">
-          {t('superTest.cta.kakaoGuide')}
-        </p>
+        <div className="mt-4 mx-auto max-w-lg rounded-card border border-accent-glow/30 bg-accent-glow/10 px-5 py-3 text-center">
+          <p className="text-sm font-medium text-accent-glow">
+            {t('superTest.cta.kakaoGuide')}
+          </p>
+        </div>
       </section>
     );
   }
