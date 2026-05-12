@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, FileText, Target, CheckCircle, Users, MessageCircle, ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
@@ -11,11 +11,28 @@ const REPORT_KEYS = ['domain', 'skill', 'weakness'] as const;
 export const SuperTestSection = React.forwardRef<HTMLDivElement>(
   function SuperTestSection(_props, ref) {
     const { t } = useLanguage();
+    const STORAGE_KEY = 'supertest_kakao_prompt';
+    const EXPIRY_MS = 24 * 60 * 60 * 1000;
+
     const [showKakaoPrompt, setShowKakaoPrompt] = useState(false);
 
+    useEffect(() => {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved && Date.now() - Number(saved) < EXPIRY_MS) {
+        setShowKakaoPrompt(true);
+      } else if (saved) {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    }, []);
+
     const handlePaymentClick = () => {
+      localStorage.setItem(STORAGE_KEY, String(Date.now()));
       window.open('https://s.tosspayments.com/BnhxdHk8xF4', '_blank');
       setShowKakaoPrompt(true);
+    };
+
+    const handleKakaoDone = () => {
+      localStorage.removeItem(STORAGE_KEY);
     };
 
     const recommendationItems = [0, 1, 2, 3].map((i) => t(`superTest.recommendation.items.${i}`));
@@ -154,13 +171,14 @@ export const SuperTestSection = React.forwardRef<HTMLDivElement>(
               href="https://open.kakao.com/o/sxHGVZ4h"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleKakaoDone}
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-[#FEE500] text-[#191919] shadow-clay-button w-full sm:w-auto min-w-[280px]"
             >
               <MessageCircle className="w-5 h-5" />
               {t('superTest.cta.kakaoOpen')}
             </a>
             <button
-              onClick={() => setShowKakaoPrompt(false)}
+              onClick={() => { handleKakaoDone(); setShowKakaoPrompt(false); }}
               className="block mx-auto text-xs text-white/40 hover:text-white/60 mt-2"
             >
               {t('superTest.cta.back')}
