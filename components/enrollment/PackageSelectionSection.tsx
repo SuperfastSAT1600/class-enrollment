@@ -5,7 +5,6 @@ import { Badge } from '@/components/ui/Badge';
 import { formatWon } from '@/lib/utils/format';
 import {
   HOUR_PACKAGES,
-  CURRICULUM_OPTIONS,
   CONTENT_ITEMS,
   SALES_LABELS,
   isHourPackageCategory,
@@ -35,9 +34,7 @@ export const PackageSelectionSection = React.forwardRef<HTMLDivElement, PackageS
     const sectionTitle =
       resolvedCategoryId === 'content'
         ? t('packageSelection.content')
-        : resolvedCategoryId === 'one-on-three'
-          ? t('packageSelection.curriculum')
-          : t('packageSelection.hourPackage');
+        : t('packageSelection.hourPackage');
 
     return (
       <section
@@ -82,37 +79,6 @@ export const PackageSelectionSection = React.forwardRef<HTMLDivElement, PackageS
                 </RadioCard>
               );
             })}
-          </div>
-        )}
-
-        {/* 1:3: 커리큘럼 */}
-        {resolvedCategoryId === 'one-on-three' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {CURRICULUM_OPTIONS.map((cur) => (
-              <RadioCard
-                key={cur.id}
-                selected={
-                  selectedOption?.type === 'curriculum' &&
-                  selectedOption.curriculumId === cur.id
-                }
-                onSelect={() =>
-                  onOptionSelect({ type: 'curriculum', curriculumId: cur.id })
-                }
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-bold text-white text-lg">
-                      {t(`curriculum.${cur.id}.name`)}
-                    </h4>
-                    <Badge variant="neutral">{cur.hours}{t('common.hours')}</Badge>
-                  </div>
-                  <p className="text-xs sm:text-sm text-white/60">{t(`curriculum.${cur.id}.description`)}</p>
-                  <p className="text-lg font-bold text-accent-glow">
-                    {formatWon(cur.totalPrice, locale)}
-                  </p>
-                </div>
-              </RadioCard>
-            ))}
           </div>
         )}
 

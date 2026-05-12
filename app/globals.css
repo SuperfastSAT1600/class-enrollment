@@ -2,13 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Pretendard Variable Font for Korean */
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
-
-:root {
-  --font-pretendard: 'Pretendard Variable', 'Pretendard', sans-serif;
-}
-
 body {
   background: #050816;
   min-height: 100vh;
@@ -54,12 +47,24 @@ body {
 .card-selectable {
   transition: all 0.2s ease;
   cursor: pointer;
+  /* 모바일: 300ms 탭 딜레이 제거 + 텍스트 선택 방지 */
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-.card-selectable:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+/* 모바일 탭 피드백 */
+.card-selectable:active {
+  transform: scale(0.98);
+  transition-duration: 0.08s;
+}
+
+@media (hover: hover) {
+  .card-selectable:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
 }
 
 .card-selectable.selected {

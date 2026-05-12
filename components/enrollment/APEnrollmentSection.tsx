@@ -6,16 +6,11 @@ import { formatWon } from '@/lib/utils/format';
 import { APCustomHourSection } from './APCustomHourSection';
 
 const CARD_STYLES: Record<string, string> = {
-  'ap-lite': 'border-border-strong',
   'ap-standard': 'border-border-strong ring-1 ring-accent-glow/30',
-  'ap-booster': 'border-border-strong',
 };
 
-const CARD_ACCENT: Record<string, string> = {
-  'ap-lite': 'text-indigo-300',
-  'ap-standard': 'text-indigo-300',
-  'ap-booster': 'text-indigo-300',
-};
+const DEFAULT_CARD_STYLE = 'border-border-strong';
+const CARD_ACCENT = 'text-indigo-300';
 
 const SALES_BADGE: Record<string, { textKey: string; variant: 'warning' | 'success' | 'primary' }> = {
   entry: { textKey: 'salesLabels.entry', variant: 'primary' },
@@ -43,12 +38,12 @@ export function APEnrollmentSection() {
             return (
               <div
                 key={pkg.id}
-                className={`rounded-card border bg-clay-solid ${CARD_STYLES[pkg.id]} p-5 shadow-clay relative`}
+                className={`rounded-card border bg-clay-solid ${CARD_STYLES[pkg.id] || DEFAULT_CARD_STYLE} p-5 shadow-clay relative`}
               >
                 <div className="h-5 mb-2">
                   {badge && <Badge variant={badge.variant}>{t(badge.textKey)}</Badge>}
                 </div>
-                <h4 className={`text-lg font-bold ${CARD_ACCENT[pkg.id]} mb-1`}>
+                <h4 className={`text-lg font-bold ${CARD_ACCENT} mb-1`}>
                   {pkg.name}
                 </h4>
                 <p className="text-2xl font-bold text-white flex items-baseline gap-2">
@@ -113,9 +108,9 @@ export function APEnrollmentSection() {
 
       {/* CTA */}
       <div className="text-center">
-        <div className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-accent text-white shadow-clay-button w-full sm:w-auto min-w-[280px]">
+        <button type="button" className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-accent text-white shadow-clay-button w-full sm:w-auto min-w-[280px]">
           {t('ap.cta.button')}
-        </div>
+        </button>
         <p className="mt-3 text-xs text-white/60">
           {t('ap.cta.description')}
         </p>

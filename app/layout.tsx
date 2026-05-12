@@ -35,6 +35,10 @@ export default function RootLayout({
     <html lang="ko" className={outfit.variable}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
       </head>
       <body className="font-sans antialiased"><Providers>{children}</Providers></body>
     </html>

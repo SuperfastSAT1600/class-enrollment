@@ -3,7 +3,6 @@ import type {
   CategoryId,
   HourPackageCategoryId,
   HourPackage,
-  CurriculumOption,
   ContentItem,
   ManagementService,
   ManagementType,
@@ -54,13 +53,11 @@ export const PROGRAM_TYPES: ProgramTypeOption[] = [
     subtitle: '집중 단기 과정',
     description: '여름방학 기간 집중적으로 실력을 끌어올리는 특별 프로그램',
     icon: 'Sun',
-    badge: '얼리버드',
   },
 ];
 
 export const SUMMER_INTENSIVE_DATA: SummerIntensiveInfo = {
   startDate: '6월 8일',
-  earlyBird: { discount: 10, deadline: '3.31' },
   philosophy: [
     {
       title: '개념 우선',
@@ -177,12 +174,6 @@ export const CLASS_FORMATS: ClassFormatOption[] = [
     recommended: true,
   },
   {
-    id: 'one-on-three',
-    name: '1:3 수업',
-    description: '소규모 그룹 수업 + 커리큘럼별 관리 서비스',
-    icon: 'Users',
-  },
-  {
     id: 'content',
     name: '콘텐츠',
     description: '인강, 단어, 문제풀이 등 월간 구독 콘텐츠',
@@ -192,7 +183,6 @@ export const CLASS_FORMATS: ClassFormatOption[] = [
 
 const FORMAT_EXTRAS: Record<ClassFormat, { subtitle: string; managementLevel: string }> = {
   'one-on-one': { subtitle: '풀 관리', managementLevel: '풀 관리' },
-  'one-on-three': { subtitle: '관리 포함', managementLevel: '관리 포함' },
   'content': { subtitle: '부분 관리', managementLevel: '부분 관리' },
 };
 
@@ -224,41 +214,6 @@ export const HOUR_PACKAGES: Record<HourPackageCategoryId, HourPackage[]> = {
   ],
 };
 
-export const CURRICULUM_OPTIONS: CurriculumOption[] = [
-  {
-    id: 'curriculum-basic',
-    name: '기초+유형반',
-    hours: 40,
-    pricePerHour: 85000,
-    totalPrice: 3400000,
-    description: 'SAT 기초부터 유형별 전략까지 체계적으로 학습',
-  },
-  {
-    id: 'curriculum-type',
-    name: '유형반',
-    hours: 10,
-    pricePerHour: 95000,
-    totalPrice: 950000,
-    description: '문제 유형별 집중 공략 및 전략 학습',
-  },
-  {
-    id: 'curriculum-practice',
-    name: '실전반',
-    hours: 20,
-    pricePerHour: 90000,
-    totalPrice: 1800000,
-    description: '실전 모의고사 풀이 및 시간 관리 훈련',
-  },
-  {
-    id: 'curriculum-final',
-    name: '파이널',
-    hours: 10,
-    pricePerHour: 105000,
-    totalPrice: 1050000,
-    description: '시험 직전 최종 점검 및 약점 보완',
-  },
-];
-
 export const CONTENT_ITEMS: ContentItem[] = [
   { id: 'content-lecture', name: '인강', monthlyPrice: 249000, description: '전 범위 동영상 강의' },
   { id: 'content-vocab', name: '단어', monthlyPrice: 50000, description: 'SAT 필수 어휘 학습' },
@@ -267,23 +222,17 @@ export const CONTENT_ITEMS: ContentItem[] = [
   { id: 'content-qna', name: '실시간 Q&A', monthlyPrice: 200000, description: '실시간 질의응답 지원' },
 ];
 
+const FULL_MANAGEMENT_SERVICES: ManagementService[] = [
+  { key: 'lessonFeedback', name: '레슨 피드백', included: true },
+  { key: 'pastExams', name: '기출문제 제공', included: true },
+  { key: 'dailyVocab', name: '데일리 Vocab', included: true },
+  { key: 'wrongAnswerNote', name: '오답노트', included: true },
+  { key: 'homeworkSchedule', name: '숙제 일정 관리', included: true },
+  { key: 'biweeklyMock', name: '2주 간격 모의시험', included: true },
+];
+
 export const MANAGEMENT_SERVICES: Record<CategoryId, ManagementService[]> = {
-  'one-on-one': [
-    { key: 'lessonFeedback', name: '레슨 피드백', included: true },
-    { key: 'pastExams', name: '기출문제 제공', included: true },
-    { key: 'dailyVocab', name: '데일리 Vocab', included: true },
-    { key: 'wrongAnswerNote', name: '오답노트', included: true },
-    { key: 'homeworkSchedule', name: '숙제 일정 관리', included: true },
-    { key: 'biweeklyMock', name: '2주 간격 모의시험', included: true },
-  ],
-  'one-on-three': [
-    { key: 'lessonFeedback', name: '레슨 피드백', included: true },
-    { key: 'pastExams', name: '기출문제 제공', included: true },
-    { key: 'dailyVocab', name: '데일리 Vocab', included: true },
-    { key: 'wrongAnswerNote', name: '오답노트', included: true },
-    { key: 'homeworkSchedule', name: '숙제 일정 관리', included: true },
-    { key: 'biweeklyMock', name: '2주 간격 모의시험', included: true },
-  ],
+  'one-on-one': FULL_MANAGEMENT_SERVICES,
   content: [
     { key: 'learningFeedback', name: '학습 결과 피드백', included: true },
     { key: 'wrongAnswerNote', name: '오답노트', included: true },
@@ -373,15 +322,6 @@ export function getSelectedOptionSummary(
       : `${category.name} ${pkg.hours}시간`;
   }
 
-  if (option.type === 'curriculum') {
-    const cur = CURRICULUM_OPTIONS.find((c) => c.id === option.curriculumId);
-    if (!cur) return '';
-    const curName = t ? t(`curriculum.${cur.id}.name`) : cur.name;
-    return t
-      ? t('summary.summaryCurriculum', { category: categoryName, name: curName, hours: cur.hours })
-      : `${category.name} - ${cur.name} ${cur.hours}시간`;
-  }
-
   if (option.type === 'content') {
     if (option.contentIds.length === 0) return '';
     const names = option.contentIds
@@ -406,11 +346,6 @@ export function getSelectedTotalPrice(
     if (!isHourPackageCategory(categoryId)) return 0;
     const pkg = HOUR_PACKAGES[categoryId].find((p) => p.id === option.packageId);
     return pkg?.totalPrice ?? 0;
-  }
-
-  if (option.type === 'curriculum') {
-    const cur = CURRICULUM_OPTIONS.find((c) => c.id === option.curriculumId);
-    return cur?.totalPrice ?? 0;
   }
 
   if (option.type === 'content') {

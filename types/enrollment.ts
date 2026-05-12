@@ -39,7 +39,6 @@ export interface SummerScheduleRow {
 
 export interface SummerIntensiveInfo {
   startDate: string;
-  earlyBird: { discount: number; deadline: string };
   philosophy: { title: string; description: string; icon: string }[];
   weeklyStructure: { days: string; focus: string; description: string }[];
   schedule: {
@@ -50,13 +49,13 @@ export interface SummerIntensiveInfo {
   timezoneNotice: string;
 }
 
-export type CategoryId = 'one-on-one' | 'one-on-three' | 'content' | 'unmanaged';
+export type CategoryId = 'one-on-one' | 'content' | 'unmanaged';
 
 export type HourPackageCategoryId = Extract<CategoryId, 'one-on-one' | 'unmanaged'>;
 
 export type ManagementType = 'managed' | 'unmanaged';
 
-export type ClassFormat = 'one-on-one' | 'one-on-three' | 'content';
+export type ClassFormat = 'one-on-one' | 'content';
 
 export interface Category {
   id: CategoryId;
@@ -77,15 +76,6 @@ export interface HourPackage {
   salesLabel?: 'popular' | 'bestValue';
 }
 
-export interface CurriculumOption {
-  id: string;
-  name: string;
-  hours: number;
-  pricePerHour: number;
-  totalPrice: number;
-  description: string;
-}
-
 export interface ContentItem {
   id: string;
   name: string;
@@ -101,7 +91,6 @@ export interface ManagementService {
 
 export type OptionSelection =
   | { type: 'hour-package'; packageId: string }
-  | { type: 'curriculum'; curriculumId: string }
   | { type: 'content'; contentIds: string[] };
 
 export interface ManagementTypeOption {

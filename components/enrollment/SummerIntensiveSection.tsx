@@ -30,10 +30,6 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
                 </span>
               </div>
             </div>
-            <div className="flex flex-col items-start sm:items-end gap-1">
-              <Badge variant="warning">{t('summer.earlyBirdDiscount', { rate: data.earlyBird.discount })}</Badge>
-              <span className="text-xs text-white/40">{t('summer.earlyBirdDeadline', { deadline: data.earlyBird.deadline })}</span>
-            </div>
           </div>
         </div>
 
@@ -114,12 +110,6 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
                 </span>
                 {t('summer.benefits.curriculum')}
               </li>
-              <li className="flex items-start gap-3 text-sm text-white/70">
-                <span className="w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-amber-400 text-xs">★</span>
-                </span>
-                {t('summer.benefits.earlyBird', { rate: data.earlyBird.discount, deadline: data.earlyBird.deadline })}
-              </li>
             </ul>
           </div>
         </div>
@@ -136,9 +126,9 @@ export const SummerIntensiveSection = React.forwardRef<HTMLDivElement>(
 
         {/* CTA */}
         <div className="text-center">
-          <div className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-accent text-white shadow-clay-button w-full sm:w-auto min-w-[280px]">
+          <button type="button" className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-accent text-white shadow-clay-button w-full sm:w-auto min-w-[280px]">
             {t('summer.cta.button')}
-          </div>
+          </button>
           <p className="mt-3 text-xs text-white/40">
             {t('summer.cta.description')}
           </p>
