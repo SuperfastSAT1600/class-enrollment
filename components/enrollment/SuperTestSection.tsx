@@ -1,5 +1,5 @@
-import React from 'react';
-import { Calendar, Clock, FileText, Target, CheckCircle, Users, MessageCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Calendar, Clock, FileText, Target, CheckCircle, Users, MessageCircle, ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 
@@ -11,6 +11,12 @@ const REPORT_KEYS = ['domain', 'skill', 'weakness'] as const;
 export const SuperTestSection = React.forwardRef<HTMLDivElement>(
   function SuperTestSection(_props, ref) {
     const { t } = useLanguage();
+    const [showKakaoPrompt, setShowKakaoPrompt] = useState(false);
+
+    const handlePaymentClick = () => {
+      window.open('https://s.tosspayments.com/BnhxdHk8xF4', '_blank');
+      setShowKakaoPrompt(true);
+    };
 
     const recommendationItems = [0, 1, 2, 3].map((i) => t(`superTest.recommendation.items.${i}`));
 
@@ -135,30 +141,58 @@ export const SuperTestSection = React.forwardRef<HTMLDivElement>(
         </div>
 
         {/* CTA */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a
-            href="https://s.tosspayments.com/BnhxdHk8xF4"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-accent text-white shadow-clay-button w-full sm:w-auto min-w-[280px]"
-          >
-            {t('superTest.cta.button')}
-          </a>
-          <a
-            href="https://open.kakao.com/o/sxHGVZ4h"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-[#FEE500] text-[#191919] shadow-clay-button w-full sm:w-auto min-w-[280px]"
-          >
-            <MessageCircle className="w-5 h-5" />
-            {t('superTest.cta.kakao')}
-          </a>
-        </div>
-        <div className="mt-4 rounded-card border border-accent-glow/30 bg-accent-glow/10 px-4 sm:px-5 py-3 text-center">
-          <p className="text-xs sm:text-sm font-medium text-accent-glow leading-relaxed">
-            {t('superTest.cta.kakaoGuide')}
-          </p>
-        </div>
+        {showKakaoPrompt ? (
+          <div className="rounded-card border border-[#FEE500]/40 bg-[#FEE500]/10 p-6 sm:p-8 text-center space-y-4 animate-fade-in">
+            <div className="w-14 h-14 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto">
+              <CheckCircle className="w-8 h-8 text-emerald-400" />
+            </div>
+            <h3 className="text-lg font-bold text-white">{t('superTest.cta.paymentDone')}</h3>
+            <p className="text-sm text-white/70 leading-relaxed">
+              {t('superTest.cta.kakaoGuide')}
+            </p>
+            <a
+              href="https://open.kakao.com/o/sxHGVZ4h"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-[#FEE500] text-[#191919] shadow-clay-button w-full sm:w-auto min-w-[280px]"
+            >
+              <MessageCircle className="w-5 h-5" />
+              {t('superTest.cta.kakaoOpen')}
+            </a>
+            <button
+              onClick={() => setShowKakaoPrompt(false)}
+              className="block mx-auto text-xs text-white/40 hover:text-white/60 mt-2"
+            >
+              {t('superTest.cta.back')}
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <button
+                onClick={handlePaymentClick}
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-accent text-white shadow-clay-button w-full sm:w-auto min-w-[280px]"
+              >
+                {t('superTest.cta.button')}
+                <ExternalLink className="w-4 h-4" />
+              </button>
+              <a
+                href="https://open.kakao.com/o/sxHGVZ4h"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-btn font-semibold text-base bg-[#FEE500] text-[#191919] shadow-clay-button w-full sm:w-auto min-w-[280px]"
+              >
+                <MessageCircle className="w-5 h-5" />
+                {t('superTest.cta.kakao')}
+              </a>
+            </div>
+            <div className="mt-4 rounded-card border border-accent-glow/30 bg-accent-glow/10 px-4 sm:px-5 py-3 text-center">
+              <p className="text-xs sm:text-sm font-medium text-accent-glow leading-relaxed">
+                {t('superTest.cta.kakaoGuide')}
+              </p>
+            </div>
+          </>
+        )}
       </section>
     );
   }
