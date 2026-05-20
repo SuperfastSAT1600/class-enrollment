@@ -37,11 +37,6 @@
       "subtitle": "집중 단기 과정",
       "description": "여름방학 기간 집중적으로 실력을 끌어올리는 특별 프로그램"
     },
-    "super-test": {
-      "name": "Super Test",
-      "subtitle": "실전 모의 테스트",
-      "description": "매주 토요일 실전 SAT 모의 테스트로 실력을 점검하세요"
-    }
   },
   "managementType": {
     "sectionTitle": "관리 여부 선택",
@@ -249,62 +244,6 @@
     "cta": {
       "button": "원장님과 직접 상담하고 로드맵 설계하세요",
       "description": "프로그램 상세 안내와 맞춤 상담을 받으실 수 있습니다"
-    }
-  },
-  "superTest": {
-    "title": "Super Test",
-    "subtitle": "매주 토요일",
-    "price": "₩60,000",
-    "priceLabel": "1회",
-    "overview": {
-      "title": "개요",
-      "realExam": {
-        "title": "실전 환경",
-        "description": "Digital SAT와 100% 동일한 시험 환경에서 실전 감각을 키웁니다."
-      },
-      "diagnosis": {
-        "title": "정밀 진단",
-        "description": "Domain/Skill 단위 분석으로 정확한 약점을 파악합니다."
-      },
-      "roadmap": {
-        "title": "맞춤 로드맵",
-        "description": "진단 결과를 바탕으로 개인 맞춤 학습 로드맵을 제공합니다."
-      }
-    },
-    "examStructure": {
-      "title": "시험 구성",
-      "rw": "Reading & Writing",
-      "rwTime": "64분",
-      "math": "Math",
-      "mathTime": "70분",
-      "note": "Digital SAT와 100% 동일한 환경에서 진행됩니다."
-    },
-    "report": {
-      "title": "진단 리포트",
-      "domain": "Domain 단위 분석",
-      "domainDesc": "Reading & Writing, Math 각 영역별 정확한 점수와 성취도를 분석합니다.",
-      "skill": "Skill 단위 분석",
-      "skillDesc": "세부 스킬별 강점과 약점을 파악하여 효율적인 학습 방향을 제시합니다.",
-      "weakness": "약점 파악",
-      "weaknessDesc": "반복적으로 틀리는 유형을 정밀하게 분석하여 집중 학습 포인트를 제공합니다."
-    },
-    "recommendation": {
-      "title": "이런 학생에게 추천합니다",
-      "items": [
-        "현재 실력을 정확하게 파악하고 싶은 학생",
-        "실전 시험 환경에 미리 적응하고 싶은 학생",
-        "약점 영역을 찾아 효율적으로 공부하고 싶은 학생",
-        "정기적으로 실력 변화를 추적하고 싶은 학생"
-      ]
-    },
-    "cta": {
-      "button": "Super Test 결제하기",
-      "description": "토스페이먼츠 결제 페이지로 이동합니다",
-      "kakao": "카카오톡 정보 남기기",
-      "kakaoGuide": "결제 후 카카오톡 오픈채팅에 학생 이름 / 학년 / 희망 일정 / 이전 SAT 점수를 남겨주세요",
-      "paymentDone": "결제가 완료되셨나요?",
-      "kakaoOpen": "카카오톡으로 정보 남기기",
-      "back": "← 돌아가기"
     }
   },
   "ap": {

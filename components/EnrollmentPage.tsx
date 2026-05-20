@@ -18,7 +18,6 @@ import { ClassFormatSection } from './enrollment/ClassFormatSection';
 import { PackageSelectionSection } from './enrollment/PackageSelectionSection';
 import { SummarySection } from './enrollment/SummarySection';
 import { SummerIntensiveSection } from './enrollment/SummerIntensiveSection';
-import { SuperTestSection } from './enrollment/SuperTestSection';
 import { CourseTypeToggle } from './enrollment/CourseTypeToggle';
 import { APEnrollmentSection } from './enrollment/APEnrollmentSection';
 import { useScrollBehavior } from '@/hooks/useScrollBehavior';
@@ -35,7 +34,6 @@ export function EnrollmentPage() {
   const searchParams = useSearchParams();
 
   const summerRef = useRef<HTMLDivElement>(null);
-  const superTestRef = useRef<HTMLDivElement>(null);
   const managementTypeRef = useRef<HTMLDivElement>(null);
   const formatRef = useRef<HTMLDivElement>(null);
   const packageRef = useRef<HTMLDivElement>(null);
@@ -46,10 +44,10 @@ export function EnrollmentPage() {
 
   useEffect(() => {
     const program = searchParams.get('program');
-    if (program === 'super-test' || program === 'summer-intensive' || program === 'regular') {
+    if (program === 'summer-intensive' || program === 'regular') {
       setProgramType(program);
       setTimeout(() => {
-        const targetRef = program === 'regular' ? managementTypeRef : program === 'summer-intensive' ? summerRef : superTestRef;
+        const targetRef = program === 'regular' ? managementTypeRef : summerRef;
         scrollTo(targetRef, 'top', 250);
       }, 100);
     }
@@ -101,7 +99,7 @@ export function EnrollmentPage() {
       setSelectedOption(null);
     }
 
-    const targetRef = type === 'regular' ? managementTypeRef : type === 'summer-intensive' ? summerRef : superTestRef;
+    const targetRef = type === 'regular' ? managementTypeRef : summerRef;
     scrollTo(targetRef, 'top', 250);
   }, [programType, scrollTo]);
 
@@ -183,10 +181,6 @@ export function EnrollmentPage() {
 
             {programType === 'summer-intensive' && (
               <SummerIntensiveSection ref={summerRef} />
-            )}
-
-            {programType === 'super-test' && (
-              <SuperTestSection ref={superTestRef} />
             )}
 
             {showRegularFlow && (

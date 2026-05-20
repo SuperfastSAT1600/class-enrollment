@@ -54,13 +54,6 @@ export const PROGRAM_TYPES: ProgramTypeOption[] = [
     description: '여름방학 기간 집중적으로 실력을 끌어올리는 특별 프로그램',
     icon: 'Sun',
   },
-  {
-    id: 'super-test',
-    name: 'Super Test',
-    subtitle: '실전 모의 테스트',
-    description: '매주 토요일 실전 SAT 모의 테스트로 실력을 점검하세요',
-    icon: 'ClipboardCheck',
-  },
 ];
 
 export const SUMMER_INTENSIVE_DATA: SummerIntensiveInfo = {
